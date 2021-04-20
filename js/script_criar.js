@@ -1,4 +1,5 @@
-function estenderPerguntas(pergunta){
+
+function estenderPergunta(pergunta){
   pergunta.parentNode.classList.remove("colapsed")
   pergunta.classList.add("esconde")
 }
