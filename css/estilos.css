@@ -122,6 +122,7 @@ header {
   gap: 14px;
   position: relative;
   overflow-y: hidden;
+  height: 800px;
 }
 .perguntas-do-quizz p {
   margin-top: 14px;
@@ -136,9 +137,6 @@ header {
   position: absolute;
   top: 20px;
   right: 20px;
-}
-.colapsed {
-  height: 74px;
 }
 /* Tecrceira Página */
 .niveis-do-quizz {
@@ -166,4 +164,7 @@ header {
 }
 .tela-inicial-desktop {
   display: none;
+}
+.perguntas-do-quizz .colapsed {
+  height: 74px;
 }
