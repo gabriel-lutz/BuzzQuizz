@@ -24,30 +24,47 @@
           <H1>Todos os Quizzes</H1>
       </div>
     </div>
-    <div class="infoBasicaDoQuizz">
-      <div class="orientacoesDePreenchimento">Comece pelo começo</div>
-      <div class="conteudoParaPreencher">
-        <input class="inputTituloDoQuizz caixasDeInput" placeholder="Titulo do quizz"></input>
-        <input class="inputEnderecoDaImagem caixasDeInput" placeholder="URL da imagem do quizz"></input>
-        <input class="inputQuantidadeDePerguntas caixasDeInput" placeholder="Quantidade de perguntas do quizz"></input>
-        <input class="inputQuantidadeDeNiveis caixasDeInput" placeholder="Quantidade de niveis do quizz"></input>
+    <div class="info-basica-do-quizz">
+      <div class="orientacoes-de-preenchimento">Comece pelo começo</div>
+      <div class="conteudo-para-preencher">
+        <input class="input-titulo-do-quizz caixa-de-input" placeholder="Titulo do quizz"></input>
+        <input class="input-endereco-da-imagem caixa-de-input" placeholder="URL da imagem do quizz"></input>
+        <input class="input-quantidade-de-perguntas caixa-de-input" placeholder="Quantidade de perguntas do quizz"></input>
+        <input class="input-quantidade-de-niveis caixa-de-input" placeholder="Quantidade de niveis do quizz"></input>
       </div>
-      <div class="botaoParaProsseguir">Prosseguir para perguntas</div>
+      <div class="botao-para-prosseguir">Prosseguir para perguntas</div>
     </div>
-    <div class="perguntasDoQuizz esconde">
-      <div class="orientacoesDePreenchimento"></div>
-      <div class="conteudoParaPreencher"></div>
-      <div class="botaoParaProsseguir"></div>
+    <div class="perguntas-do-quizz">
+      <div class="orientacoes-de-preenchimento">Crie suas perguntas</div>
+      <div class="conteudo-para-preencher colapsed" >
+        <p>Pergunta 1</p>
+        <input class="input-titulo-do-quizz caixa-de-input" placeholder="Titulo da pergunta"></input>
+        <input class="input-titulo-do-quizz caixa-de-input" placeholder="Cor de fundo da pergunta"></input>
+        <p>Resposta correta</p>
+        <input class="input-titulo-do-quizz caixa-de-input" placeholder="Resposta correta"></input>
+        <input class="input-titulo-do-quizz caixa-de-input" placeholder="URL da imagem"></input>
+        <p>Respostas incorretas</p>
+        <input class="input-titulo-do-quizz caixa-de-input" placeholder="Resposta incorreta 1"></input>
+        <input class="input-titulo-do-quizz caixa-de-input" placeholder="URL da imagem 1"></input>
+        <input class="input-titulo-do-quizz caixa-de-input" placeholder="Resposta incorreta 2"></input>
+        <input class="input-titulo-do-quizz caixa-de-input" placeholder="URL da imagem 2"></input>
+        <input class="input-titulo-do-quizz caixa-de-input" placeholder="Resposta incorreta 3"></input>
+        <input class="input-titulo-do-quizz caixa-de-input" placeholder="URL da imagem 3"></input>
+        <ion-icon name="document-outline" onclick="estenderPerguntas(this)"></ion-icon>
+      </div>
+      <div class="botao-para-prosseguir">Prosseguir para criar níveis</div>
     </div>
-    <div class="niveisDoQuizz esconde">
-      <div class="orientacoesDePreenchimento"></div>
-      <div class="conteudoParaPreencher"></div>
-      <div class="botaoParaProsseguir"></div>
+    <div class="niveis-do-quizz">
+      <div class="orientacoes-de-preenchimento">Agora, decida os níveis</div>
+      <div class="conteudo-para-preencher"></div>
+      <div class="botao-para-prosseguir"></div>
     </div>
-    <div class="sucessoDoQuizz esconde">
-      <div class="orientacoesDePreenchimento"></div>
-      <div class="conteudoParaPreencher"></div>
-      <div class="botaoParaProsseguir"></div>
+    <div class="sucesso-do-quizz">
+      <div class="orientacoes-de-preenchimento">Seu quizz está pronto!</div>
+      <div class="conteudo-para-preencher"></div>
+      <div class="botao-para-prosseguir"></div>
     </div>
+    <script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script>
+    <script src="js/script_criar.js"></script>
 </body>
 </html>
