@@ -66,6 +66,8 @@
           </ul>
       </div>
     </div>
+
+    <!--CRIAÇÃO DE QUIZZ-->
     <div class="info-basica-do-quizz">
       <div class="orientacoes-de-preenchimento">Comece pelo começo</div>
       <div class="conteudo-para-preencher">
@@ -74,7 +76,7 @@
         <input class="input-quantidade-de-perguntas caixa-de-input" placeholder="Quantidade de perguntas do quizz"></input>
         <input class="input-quantidade-de-niveis caixa-de-input" placeholder="Quantidade de niveis do quizz"></input>
       </div>
-      <div class="botao-para-prosseguir">Prosseguir para perguntas</div>
+      <div class="botao-para-prosseguir" onclick="validarDadosPg1()">Prosseguir para perguntas</div>
     </div>
     <div class="perguntas-do-quizz">
       <div class="orientacoes-de-preenchimento">Crie suas perguntas</div>
@@ -126,7 +128,7 @@
         <input class="input-titulo-do-quizz caixa-de-input" placeholder="URL da imagem 3"></input>
         <ion-icon name="document-outline" onclick="estenderPergunta(this)"></ion-icon>
       </div>
-      <div class="botao-para-prosseguir">Prosseguir para criar níveis</div>
+      <div class="botao-para-prosseguir" onclick="validarDadosPg2()">Prosseguir para criar níveis</div>
     </div>
     <div class="niveis-do-quizz">
       <div class="orientacoes-de-preenchimento">Agora, decida os níveis</div>
@@ -136,7 +138,7 @@
         <input class="input-titulo-do-quizz caixa-de-input" placeholder="% de acerto mínima"></input>
         <input class="input-titulo-do-quizz caixa-de-input" placeholder="URL da imagem do nível"></input>
         <input class="input-titulo-do-quizz caixa-de-input" placeholder="Descrição do nível"></input>
-        <ion-icon name="document-outline" onclick="estenderPergunta(this)"></ion-icon>
+        <ion-icon name="document-outline" onclick="estenderNivel(this)"></ion-icon>
       </div>
       <div class="conteudo-para-preencher colapsed" >
         <p>Nível 2</p>
@@ -144,7 +146,7 @@
         <input class="input-titulo-do-quizz caixa-de-input" placeholder="% de acerto mínima"></input>
         <input class="input-titulo-do-quizz caixa-de-input" placeholder="URL da imagem do nível"></input>
         <input class="input-titulo-do-quizz caixa-de-input" placeholder="Descrição do nível"></input>
-        <ion-icon name="document-outline" onclick="estenderPergunta(this)"></ion-icon>
+        <ion-icon name="document-outline" onclick="estenderNivel(this)"></ion-icon>
       </div>
       <div class="conteudo-para-preencher colapsed" >
         <p>Nível 3</p>
@@ -152,16 +154,16 @@
         <input class="input-titulo-do-quizz caixa-de-input" placeholder="% de acerto mínima"></input>
         <input class="input-titulo-do-quizz caixa-de-input" placeholder="URL da imagem do nível"></input>
         <input class="input-titulo-do-quizz caixa-de-input" placeholder="Descrição do nível"></input>
-        <ion-icon name="document-outline" onclick="estenderPergunta(this)"></ion-icon>
+        <ion-icon name="document-outline" onclick="estenderNivel(this)"></ion-icon>
       </div>
       
-      <div class="botao-para-prosseguir">Finalizar quizz</div>
+      <div class="botao-para-prosseguir" onclick="validarDadosPg3()">Finalizar quizz</div>
     </div>
     <div class="sucesso-do-quizz">
       <div class="orientacoes-de-preenchimento">Seu quizz está pronto!</div>
       <div class="conteudo-para-preencher"></div>
-      <div class="botao-para-prosseguir">Acessar Quizz</div>
-      <p class="voltar-para-home">Voltar para home</p>
+      <div class="botao-para-prosseguir" onclick="acessarQuizz()">Acessar Quizz</div>
+      <p class="voltar-para-home" onclick="voltarParaHome()">Voltar para home</p>
     </div>
     
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
