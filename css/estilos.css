@@ -19,7 +19,7 @@ header {
   align-items: center;
   z-index: 10;
 }
-
+/*Pagina Inicial Quizz*/
 .criar-quizz {
   background-color: #fafafa;
   display: flex;
@@ -53,8 +53,59 @@ header {
 }
 
 .todos-os-quizzes {
-  background: red;
   width: 1051px;
+  margin: 0 auto;
+}
+
+.todos-os-quizzes h1 {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.lista-quizzes {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.quizz {
+  width: 340px;
+  height: 181px;
+  background-color: blue;
+  border-radius: 5px;
+  margin-top: 12px;
+  overflow: hidden;
+  position: relative;
+}
+
+.quizz:nth-child(3n + 2) {
+  margin: 12px 15px 0 15px;
+}
+
+.quizz img {
+  width: 100%;
+  z-index: 1;
+}
+.gradiente {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(0, 0, 0, 0.5) 65.1%,
+    #000000 100%
+  );
+  z-index: 2;
+}
+.quizz h2 {
+  font-size: 19px;
+  color: #fff;
+  position: absolute;
+  bottom: 15px;
+  left: 10px;
+  z-index: 3;
 }
 
 /* Início das paginas de Criação de quizz */
@@ -158,11 +209,7 @@ header {
   background-color: purple;
 }
 /* Fim das paginas de Criação de quizz */
-
 .esconde {
-  display: none;
-}
-.tela-inicial-desktop {
   display: none;
 }
 .perguntas-do-quizz .colapsed {
