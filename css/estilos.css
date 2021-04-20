@@ -1,62 +1,103 @@
-body{
-    font-family: 'Roboto', sans-serif;
-    background-color: #FAFAFA;
+body {
+  font-family: "Roboto", sans-serif;
+  background-color: #fafafa;
 }
 
-header{
-    font-size: 37px;
-    font-weight: 700;
-    color: white;
-    height: 69px;
-    background-color: #EC362D;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);  
-    position: fixed;
-    top:0;
-    left: 0;
-    right: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 10;
+header {
+  font-size: 37px;
+  font-weight: 700;
+  color: white;
+  height: 69px;
+  background-color: #ec362d;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
 }
 
-.criar-quizz{
-    background-color: #FAFAFA;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    align-items: center;
-    margin: 146px auto 77px auto;
-    height: 181px ;
-    width: 1051px;
-    border: 1px dashed #D5D5D5;
-    border-radius: 5px ;
+.criar-quizz {
+  background-color: #fafafa;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  margin: 146px auto 77px auto;
+  height: 181px;
+  width: 1051px;
+  border: 1px dashed #d5d5d5;
+  border-radius: 5px;
 }
 
-.criar-quizz p{
-    font-size: 20px;
-    color: #B9B9B9;
-    width: 250px;
-    text-align: center;
-    line-height: 23px;
+.criar-quizz p {
+  font-size: 20px;
+  color: #b9b9b9;
+  width: 250px;
+  text-align: center;
+  line-height: 23px;
 }
 
-.criar-quizz button{
-    width: 151px;
-    height: 40px;
-    background-color: #FAFAFA;
-    font-size: 21px;
-    color: #EC362D;
-    line-height: 25px;
-    border: 1px dashed #EC362D;
-    border-radius: 50px;
+.criar-quizz button {
+  width: 151px;
+  height: 40px;
+  background-color: #fafafa;
+  font-size: 21px;
+  color: #ec362d;
+  line-height: 25px;
+  border: 1px dashed #ec362d;
+  border-radius: 50px;
 }
 
-.todos-os-quizzes{
-    background: red;
-    width: 1051px;
+.todos-os-quizzes {
+  background: red;
+  width: 1051px;
 }
 
-.tela-inicial-desktop{
-    display: none;
+.infoBasicaDoQuizz {
+  margin: 0 auto;
+  max-width: 600px;
+  height: 1000px;
+  background-color: pink;
+}
+.orientacoesDePreenchimento {
+  font-size: 23px;
+  font-family: 700;
+  margin-top: 140px;
+  margin-bottom: 27px;
+  text-align: center;
+  width: 100%;
+  background-color: red;
+}
+.conteudoParaPreencher {
+  background-color: white;
+  width: 100%;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+.perguntasDoQuizz {
+  width: 200px;
+  height: 200px;
+  background-color: pink;
+}
+.niveisDoQuizz {
+  width: 200px;
+  height: 200px;
+  background-color: pink;
+}
+.sucessoDoQuizz {
+  width: 200px;
+  height: 200px;
+  background-color: pink;
+}
+.esconde {
+  display: none;
+}
+.tela-inicial-desktop {
+  display: none;
 }
