@@ -383,6 +383,10 @@ header {
   color: #818181;
   margin-top: 9px;
 }
+.erro {
+  color: red;
+  margin-bottom: 5px;
+}
 /* Fim das paginas de Criação de quizz */
 
 .esconde {
