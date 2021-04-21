@@ -1,6 +1,7 @@
 let arrayListaQuizzes = []
-let acertos = 0
+let acertos
 let questaoAtual
+let quizzAtual
 let solicitaListaQuizz = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/buzzquizz/quizzes")
     solicitaListaQuizz.then(renderizarQuizzes)
 
@@ -21,9 +22,9 @@ function renderizarQuizzes(respostaComListaDeQuizzes){
 }
 
 function renderizarQuizzSelecionado(id){
+    quizzAtual = id-1
     acertos = 0
     questaoAtual = 0
-    setTimeout(scrollarParaProximaQuestao, 2000)
     const ocultar = document.querySelector(".tela-inicial-desktop")
     ocultar.classList.add("esconde")
     const renderizar = document.querySelector(".tela-de-quizz")
@@ -35,6 +36,7 @@ function renderizarQuizzSelecionado(id){
             renderizarQuestoes(i) 
         }
     }
+    setTimeout(scrollarParaProximaQuestao, 1000)
 }
 
 function renderizarTituloQuizz(indice){
@@ -91,24 +93,73 @@ function embaralhaRespostas(questoes, i){
 
 function escolherResposta(resposta, respostaEscolhida){
     questaoAtual ++
+    if(resposta === true){
+        acertos ++
+    }
     let questao = respostaEscolhida.parentNode
     let todasRespostas = questao.querySelectorAll(".opcao-resposta")
-    console.log(todasRespostas)
     for(let i = 0; i < todasRespostas.length; i++){
         todasRespostas[i].classList.remove("ocultar-cor")
         todasRespostas[i].classList.add("nao-escolhida")
         todasRespostas[i].removeAttribute("onclick")
     }
+    
+    const listaDeQuestoesParaScrollar = document.querySelectorAll(".caixa-de-questao")
     respostaEscolhida.classList.remove("nao-escolhida")
-    setTimeout(scrollarParaProximaQuestao, 2000)
+    if(questaoAtual <  listaDeQuestoesParaScrollar.length){
+        setTimeout(scrollarParaProximaQuestao, 2000)
+    }else{
+        renderizarResultadoQuizz()
+        setTimeout(scrollParaResultado, 2000)
+    }
 }
 
 function scrollarParaProximaQuestao(){
     const listaDeQuestoesParaScrollar = document.querySelectorAll(".caixa-de-questao")
     listaDeQuestoesParaScrollar[questaoAtual].scrollIntoView()
+}
 
+function scrollParaResultado(){
+    const scrollarParaResultadp = document.querySelector(".caixa-de-resultado")
+    scrollarParaResultadp.scrollIntoView();
+}
 
+function renderizarResultadoQuizz(){
+    const arrayListaNiveis = arrayListaQuizzes.data[quizzAtual].levels
+    const acertosUsuario = (acertos / arrayListaQuizzes.data[quizzAtual].questions.length) * 100
+    const renderizarResultado = document.querySelector(".tela-de-quizz")
+    let maior = 0
+    console.log(arrayListaNiveis)
+    for(let i = 0; i < arrayListaNiveis.length; i++){
+        if(acertosUsuario >= arrayListaNiveis[i].minValue && maior <= arrayListaNiveis[i].minValue){
+                maior = i  
+        }
+    }
+    console.log(maior)
+    renderizarResultado.innerHTML += `
+            <div class="caixa-de-resultado">
+                <div class="titulo-resultado">${acertosUsuario.toFixed(0)}% de acertos: ${arrayListaNiveis[maior].title}</div>
+                <div class="imagem-resultado">
+                <img src="${arrayListaNiveis[maior].image}" alt="">
+                </div>
+                <div class="texto-resultado">
+                <p>${arrayListaNiveis[maior].text}</p>
+                </div>
+            </div>
+                <button class="reiniciar-quizz" onclick="renderizarQuizzSelecionado('${quizzAtual + 1}')">
+                Reiniciar Quizz
+                </button>
+                <button class="voltar-home" onclick="renderizarHome()">
+                Voltar para Home
+                </button>
+            `
+}
 
+function renderizarHome(){
+    const selecionarHome = document.querySelector(".tela-inicial-desktop")
+    selecionarHome.classList.remove("esconde")
+    const selecionaTelaDeQuizz = document.querySelector(".tela-de-quizz")
+    selecionaTelaDeQuizz.classList.add("esconde")
 }
 function comparador(){
     return Math.random() - 0.5;

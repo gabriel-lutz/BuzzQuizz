@@ -111,7 +111,6 @@ header {
   z-index: 3;
 }
 
-/*Pagina de resolver quizz criado */
 .tela-de-quizz {
   margin-top: 69px;
   display: flex;
@@ -209,7 +208,7 @@ header {
 
 .texto-resultado {
   width: 340px;
-  word-break: break-all;
+  word-break: break-word;
   font-size: 19px;
   font-weight: 700;
   line-height: 25px;
