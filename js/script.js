@@ -1,5 +1,6 @@
 let arrayListaQuizzes = []
-
+let acertos = 0
+let questaoAtual
 let solicitaListaQuizz = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/buzzquizz/quizzes")
     solicitaListaQuizz.then(renderizarQuizzes)
 
@@ -20,6 +21,9 @@ function renderizarQuizzes(respostaComListaDeQuizzes){
 }
 
 function renderizarQuizzSelecionado(id){
+    acertos = 0
+    questaoAtual = 0
+    setTimeout(scrollarParaProximaQuestao, 2000)
     const ocultar = document.querySelector(".tela-inicial-desktop")
     ocultar.classList.add("esconde")
     const renderizar = document.querySelector(".tela-de-quizz")
@@ -46,7 +50,66 @@ function renderizarTituloQuizz(indice){
 
 function renderizarQuestoes(indice){
     const renderizarQuestao = document.querySelector(".tela-de-quizz")
-    for(let i = 0; i < arrayListaQuizzes.data[indice].questions.length; i++){
-        console.log(i)
+    const questoes = arrayListaQuizzes.data[indice].questions
+    
+    for(let i = 0; i < questoes.length; i++){
+        const repostasEmbralhadas = embaralhaRespostas(questoes, i)
+        renderizarQuestao.innerHTML += `
+        <div class="caixa-de-questao">
+          <div class="titulo-da-questao" style="background: ${questoes[i].color}">${questoes[i].title}</div>
+          <div class="respostas">
+        ${repostasEmbralhadas.join("")}
+          </div>
+        </div>
+        `
     }
+}
+
+
+function embaralhaRespostas(questoes, i){
+    let respostasEmbaralhadas =[]
+    for(let j = 0; j < questoes[i].answers.length; j++){
+        if(questoes[i].answers[j].isCorrectAnswer === true){
+            respostasEmbaralhadas.push(`
+                <div class="opcao-resposta correta ocultar-cor" onclick="escolherResposta(${questoes[i].answers[j].isCorrectAnswer}, this)">
+                    <img src="${questoes[i].answers[j].image}" alt="">
+                    <p>${questoes[i].answers[j].text}</p>
+                </div>
+            `)
+        }else{
+            respostasEmbaralhadas.push(`
+                <div class="opcao-resposta errada ocultar-cor" onclick="escolherResposta(${questoes[i].answers[j].isCorrectAnswer}, this)">
+                    <img src="${questoes[i].answers[j].image}" alt="">
+                    <p>${questoes[i].answers[j].text}</p>
+                </div>
+        `)
+        }
+    }
+   return respostasEmbaralhadas.sort(comparador)
+}
+
+
+function escolherResposta(resposta, respostaEscolhida){
+    questaoAtual ++
+    let questao = respostaEscolhida.parentNode
+    let todasRespostas = questao.querySelectorAll(".opcao-resposta")
+    console.log(todasRespostas)
+    for(let i = 0; i < todasRespostas.length; i++){
+        todasRespostas[i].classList.remove("ocultar-cor")
+        todasRespostas[i].classList.add("nao-escolhida")
+        todasRespostas[i].removeAttribute("onclick")
+    }
+    respostaEscolhida.classList.remove("nao-escolhida")
+    setTimeout(scrollarParaProximaQuestao, 2000)
+}
+
+function scrollarParaProximaQuestao(){
+    const listaDeQuestoesParaScrollar = document.querySelectorAll(".caixa-de-questao")
+    listaDeQuestoesParaScrollar[questaoAtual].scrollIntoView()
+
+
+
+}
+function comparador(){
+    return Math.random() - 0.5;
 }
