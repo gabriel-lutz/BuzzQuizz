@@ -28,22 +28,8 @@ let quizzCriado = {
   questions:[],
   levels:[]
 }
-let question = {
-  title:"",
-  color:"",
-  answers:[]
-}
-let answer = {
-  text:"",
-  image:"",
-  isCorrectAnswer:false
-}
-let level = {
-  title: "",
-	image: "",
-	text: "",
-	minValue: 0
-}
+
+
 
 let quantidadeDePerguntas;
 let quantidadeDeNiveis;
@@ -55,26 +41,26 @@ function validarDadosPg1(estaPagina){
   quantidadeDeNiveis = parseInt(document.querySelector(".input-quantidade-de-niveis").value);
 
   //verificando validações
-  // if(tituloQuizz.length>20 || tituloQuizz.length<6){
-  //   document.querySelector(".info-basica-do-quizz .erro").innerHTML="O título precisa ter de 6 à 20 caracteres!";
-  //   document.querySelector(".input-titulo-do-quizz").value="";
-  //   return;
-  // }
-  // if(!validURL(enderecoImagem)){
-  //   document.querySelector(".info-basica-do-quizz .erro").innerHTML="Endereço de imagem inválido!";
-  //   document.querySelector(".input-endereco-da-imagem").value="";
-  //   return;
-  // }
-  // if(quantidadeDePerguntas<3 || isNaN(quantidadeDePerguntas)){
-  //   document.querySelector(".info-basica-do-quizz .erro").innerHTML="O número de perguntas precisa ser um número maior ou igual a 3";
-  //   document.querySelector(".input-quantidade-de-perguntas").value="";
-  //   return;
-  // }
-  // if(quantidadeDeNiveis<2 || isNaN(quantidadeDeNiveis)){
-  //   document.querySelector(".info-basica-do-quizz .erro").innerHTML="O quantidade de níveis precisa ser um número maior ou igual a 2";
-  //   document.querySelector(".input-quantidade-de-niveis").value="";
-  //   return;
-  // }
+  if(tituloQuizz.length>20 || tituloQuizz.length<6){
+    document.querySelector(".info-basica-do-quizz .erro").innerHTML="O título precisa ter de 6 à 20 caracteres!";
+    document.querySelector(".input-titulo-do-quizz").value="";
+    return;
+  }
+  if(!validURL(enderecoImagem)){
+    document.querySelector(".info-basica-do-quizz .erro").innerHTML="Endereço de imagem inválido!";
+    document.querySelector(".input-endereco-da-imagem").value="";
+    return;
+  }
+  if(quantidadeDePerguntas<3 || isNaN(quantidadeDePerguntas)){
+    document.querySelector(".info-basica-do-quizz .erro").innerHTML="O número de perguntas precisa ser um número maior ou igual a 3";
+    document.querySelector(".input-quantidade-de-perguntas").value="";
+    return;
+  }
+  if(quantidadeDeNiveis<2 || isNaN(quantidadeDeNiveis)){
+    document.querySelector(".info-basica-do-quizz .erro").innerHTML="O quantidade de níveis precisa ser um número maior ou igual a 2";
+    document.querySelector(".input-quantidade-de-niveis").value="";
+    return;
+  }
 
   //Salvando as variaveis no objeto de envio
   quizzCriado.title = tituloQuizz;
@@ -133,62 +119,70 @@ function gerarPaginaDeNiveisDoQuizz(numeroDeNiveis){
 }
 
 function gerarPaginaFinalDeCriacao(titulo,imagem){
-
+  //FALTA FAZER
 }
-quantidadeDePerguntas=3
-gerarPaginaDePerguntasDoQuizz(3);
+
+
 function validarDadosPg2(estaPagina){
+  const arrayDeQuestoesObj = [];
+
   for (let i = 0; i < quantidadeDePerguntas; i++) {
     const perguntaSendoVerificada = document.querySelector(".pergunta"+(i+1));
     const textoPergunta = perguntaSendoVerificada.querySelector(".input-pergunta").value;
     const corDeFundoPergunta = perguntaSendoVerificada.querySelector(".cor-de-fundo").value;
     const respostaCorreta = perguntaSendoVerificada.querySelector(".resposta-correta").value;
     const imagemRespostaCorreta = perguntaSendoVerificada.querySelector(".imagem-resposta-correta").value;
+    const arrayRespostasObj = []
+    if(textoPergunta.length<20){
+      document.querySelector(".perguntas-do-quizz .erro").innerHTML=`PERGUNTA ${i+1}: A pergunta precisa ter 20 ou mais caracteres!`;
+      perguntaSendoVerificada.querySelector(".input-pergunta").value="";
+      estaPagina.parentNode.scrollIntoView(true);
+      return
+    }
+    if(!validarHexadecimal(corDeFundoPergunta)){
+      document.querySelector(".perguntas-do-quizz .erro").innerHTML=`PERGUNTA ${i+1}: Cor inválida! (Formato da cor: #xxxxxx)`;
+      perguntaSendoVerificada.querySelector(".cor-de-fundo").value="";
+      estaPagina.parentNode.scrollIntoView(true);
+      return
+    }
+    if(respostaCorreta===""){
+      document.querySelector(".perguntas-do-quizz .erro").innerHTML=`PERGUNTA ${i+1}: É necessario ter uma resposta correta!`;
+      perguntaSendoVerificada.querySelector(".resposta-correta").value="";
+      estaPagina.parentNode.scrollIntoView(true);
+      return
+    }
+    if(!validURL(imagemRespostaCorreta)){
+      document.querySelector(".perguntas-do-quizz .erro").innerHTML=`PERGUNTA ${i+1}: Endereço de imagem inválido!`;
+      perguntaSendoVerificada.querySelector(".imagem-resposta-correta").value="";
+      estaPagina.parentNode.scrollIntoView(true);
+      return
+    }
+    if(perguntaSendoVerificada.querySelector(".resposta-incorreta-1").value==="" && perguntaSendoVerificada.querySelector(".resposta-incorreta-2").value==="" && perguntaSendoVerificada.querySelector(".resposta-incorreta-3").value===""){
+      document.querySelector(".perguntas-do-quizz .erro").innerHTML=`PERGUNTA ${i+1}: É necessário preencher ao menos uma resposta incorreta!`;
+      estaPagina.parentNode.scrollIntoView(true);
+      return
+    }
     
-    // if(textoPergunta.length<20){
-    //   document.querySelector(".perguntas-do-quizz .erro").innerHTML=`PERGUNTA ${i+1}: A pergunta precisa ter 20 ou mais caracteres!`;
-    //   perguntaSendoVerificada.querySelector(".input-pergunta").value="";
-    //   return
-    // }
-    // if(corDeFundoPergunta!=="#"){
-    //   document.querySelector(".perguntas-do-quizz .erro").innerHTML=`PERGUNTA ${i+1}: Cor inválida! (Formato da cor: #xxxxxx)`;
-    //   perguntaSendoVerificada.querySelector(".cor-de-fundo").value="";
-    //   return
-    // }
-    // if(respostaCorreta!=="#"){
-    //   document.querySelector(".perguntas-do-quizz .erro").innerHTML=`PERGUNTA ${i+1}: É necessario ter uma resposta correta!`;
-    //   perguntaSendoVerificada.querySelector(".resposta-correta").value="";
-    //   return
-    // }
-    // if(imagemRespostaCorreta!=="#"){//validURL(imagemRespostaCorreta)){ //VALIDAR COM URL
-    //   document.querySelector(".perguntas-do-quizz .erro").innerHTML=`PERGUNTA ${i+1}: Endereço de imagem inválido!`;
-    //   perguntaSendoVerificada.querySelector(".imagem-resposta-correta").value="";
-    //   return
-    // }
-    // if(perguntaSendoVerificada.querySelector(".resposta-incorreta-1").value==="" && perguntaSendoVerificada.querySelector(".resposta-incorreta-2").value==="" && perguntaSendoVerificada.querySelector(".resposta-incorreta-3").value===""){
-    //   document.querySelector(".perguntas-do-quizz .erro").innerHTML=`PERGUNTA ${i+1}: É necessário preencher ao menos uma resposta incorreta!`;
-    //   return
-    // }
-    let posicaoDaRespostaNoArray=0;
+    arrayRespostasObj.push({text: respostaCorreta,image: imagemRespostaCorreta, isCorrectAnswer: true})
+    
     for(let j=0;j<3;j++){
       const respostaIncorreta = perguntaSendoVerificada.querySelector(".resposta-incorreta-"+(j+1)).value;
       const imagemRespostaIncorreta = perguntaSendoVerificada.querySelector(".imagem-incorreta-"+(j+1)).value;
-      // if(perguntaSendoVerificada.querySelector(".resposta-incorreta-"+(j+1)).value!==""){
-      //   if(imagemRespostaIncorreta!=="#"){//VALIDAR COM URL
-      //     document.querySelector(".perguntas-do-quizz .erro").innerHTML=`PERGUNTA ${i+1}: Resposta Incorreta ${j+1}: Endereço de imagem inválido!`;
-      //     perguntaSendoVerificada.querySelector(".imagem-incorreta-"+(j+1)).value="";
-      //     return
-      //   }
-        question.answers[posicaoDaRespostaNoArray] = {text: respostaIncorreta,image: imagemRespostaIncorreta, isCorrectAnswer: false}
-        posicaoDaRespostaNoArray++;
-      //}
+      if(perguntaSendoVerificada.querySelector(".resposta-incorreta-"+(j+1)).value!==""){
+        if(!validURL(imagemRespostaIncorreta)){
+          document.querySelector(".perguntas-do-quizz .erro").innerHTML=`PERGUNTA ${i+1}: Resposta Incorreta ${j+1}: Endereço de imagem inválido!`;
+          perguntaSendoVerificada.querySelector(".imagem-incorreta-"+(j+1)).value="";
+          estaPagina.parentNode.scrollIntoView(true);
+          return
+        }
+        arrayRespostasObj.push({text: respostaIncorreta,image: imagemRespostaIncorreta, isCorrectAnswer: false})
+      }
     }
-    question.title=textoPergunta
-    question.color=corDeFundoPergunta
-    quizzCriado.questions[i]=question
-
+    arrayDeQuestoesObj.push({title: textoPergunta,color: corDeFundoPergunta, answers: arrayRespostasObj})
   }
+  quizzCriado.questions = arrayDeQuestoesObj
   console.log(quizzCriado)
+
 
   estaPagina.parentNode.classList.add("esconde")
   document.querySelector(".niveis-do-quizz").classList.remove("esconde")
@@ -197,6 +191,9 @@ function validarDadosPg2(estaPagina){
 
 function validarDadosPg3(estaPagina){
   const arrayPorcentagens = []
+  const arrayDeNiveis=[]
+  let temZero = false;
+
   for (let i = 0; i < quantidadeDeNiveis; i++) {
     const nivelASerVerificado = document.querySelector(".nivel"+(i+1));
     const tituloNivel = nivelASerVerificado.querySelector(".titulo-do-nivel").value;
@@ -204,42 +201,68 @@ function validarDadosPg3(estaPagina){
     arrayPorcentagens.push(porcentagemNivel);
     const imagemNivel = nivelASerVerificado.querySelector(".imagem-do-nivel").value;
     const descricaoNivel = nivelASerVerificado.querySelector(".descricao-do-nivel").value;
-    // if(tituloNivel.length<10){
-    //   document.querySelector(".niveis-do-quizz .erro").innerHTML=`NIVEL ${i+1}: O titulo precisa ter 10 caracteres ou mais!`;
-    //   nivelASerVerificado.querySelector(".titulo-do-nivel").value="";
-    //   return
-    // }
-    // if(porcentagemNivel>100 || porcentagemNivel<0 || nivelASerVerificado.querySelector(".porcentagem-do-nivel").value ===""||isNaN(porcentagemNivel)){
-    //   document.querySelector(".niveis-do-quizz .erro").innerHTML=`NIVEL ${i+1}: A porcentagem precisa ser um valor de 0 a 100!`;
-    //   nivelASerVerificado.querySelector(".porcentagem-do-nivel").value="";
-    //   return
-    // }
-    // if(imagemNivel!=="#"){
-    //   document.querySelector(".niveis-do-quizz .erro").innerHTML=`NIVEL ${i+1}: Endereco de imagem inválido!`;
-    //   nivelASerVerificado.querySelector(".imagem-do-nivel").value="";
-    //   return
-    // }
-    // if(descricaoNivel.length<30){
-    //   document.querySelector(".niveis-do-quizz .erro").innerHTML=`NIVEL ${i+1}: A descrição precisa ter 30 caracteres ou mais!`;
-    //   nivelASerVerificado.querySelector(".descricao-do-nivel").value="";
-    //   return
-    // }
-    level.title = tituloNivel
-    level.image = imagemNivel
-    level.text = descricaoNivel
-    level.minValue = porcentagemNivel
-    quizzCriado.levels[i]=level
-
+    if(tituloNivel.length<10){
+      document.querySelector(".niveis-do-quizz .erro").innerHTML=`NIVEL ${i+1}: O titulo precisa ter 10 caracteres ou mais!`;
+      nivelASerVerificado.querySelector(".titulo-do-nivel").value="";
+      estaPagina.parentNode.scrollIntoView(true);
+      return
+    }
+    if(porcentagemNivel>100 || porcentagemNivel<0 || nivelASerVerificado.querySelector(".porcentagem-do-nivel").value ===""||isNaN(porcentagemNivel)){
+      document.querySelector(".niveis-do-quizz .erro").innerHTML=`NIVEL ${i+1}: A porcentagem precisa ser um valor de 0 a 100!`;
+      nivelASerVerificado.querySelector(".porcentagem-do-nivel").value="";
+      estaPagina.parentNode.scrollIntoView(true);
+      return
+    }
+    if(!validURL(imagemNivel)){
+      document.querySelector(".niveis-do-quizz .erro").innerHTML=`NIVEL ${i+1}: Endereco de imagem inválido!`;
+      nivelASerVerificado.querySelector(".imagem-do-nivel").value="";
+      estaPagina.parentNode.scrollIntoView(true);
+      return
+    }
+    if(descricaoNivel.length<30){
+      document.querySelector(".niveis-do-quizz .erro").innerHTML=`NIVEL ${i+1}: A descrição precisa ter 30 caracteres ou mais!`;
+      nivelASerVerificado.querySelector(".descricao-do-nivel").value="";
+      estaPagina.parentNode.scrollIntoView(true);
+      return
+    }
+    arrayDeNiveis.push({title: tituloNivel,image: imagemNivel,text: descricaoNivel,minValue: parseInt(porcentagemNivel)})
   }
+  for (let i = 0; i < quantidadeDeNiveis; i++){
+    if(arrayPorcentagens[i]==="0"){
+      temZero=true
+    }
+  }
+  if(temZero==false){
+    document.querySelector(".niveis-do-quizz .erro").innerHTML=`Ao menos uma das porcentagens precisa ser zero!`;
+    estaPagina.parentNode.scrollIntoView(true);
+    return
+  }
+  quizzCriado.levels =arrayDeNiveis;
+  console.log("Quizz Criado")
   console.log(quizzCriado)
-  //enviarNovoQuizz()
+
+  enviarNovoQuizz()
   estaPagina.parentNode.classList.add("esconde")
   document.querySelector(".sucesso-do-quizz").classList.remove("esconde")  
   console.log("ir para p4")
 }
+
 function enviarNovoQuizz(){
-  axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/buzzquizz/quizzes")
+  console.log("Enviando novo quizz para o servidor")
+  const promisse = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/buzzquizz/quizzes",quizzCriado)
+  promisse.then(enviado)
+  promisse.catch(ocorreuErro)
 }
+//ENVIADO CORRETAMENTE
+function enviado(resposta){
+  console.log(resposta)
+}
+//OCORREU ERRO
+function ocorreuErro(erro){
+  console.log(erro)
+}
+
+//FUNCAO DE ACESSAR O QUIZZ CRIADO
 function acessarQuizz(estaPagina){
 
   estaPagina.parentNode.classList.add("esconde")
@@ -247,12 +270,14 @@ function acessarQuizz(estaPagina){
   console.log("acessar quizz")
 }
 
+//FUNCAO VOLTAR PARA HOVE
 function voltarParaHome(estaPagina){
 
   estaPagina.parentNode.classList.add("esconde")
-  //document.querySelector(".perguntas-do-quizz").classList.remove("esconde")
+  //document.querySelector(".perguntas-do-quizz").classList.remove("esconde") //REMOVER ESCONDE DA HOME
   console.log("voltar para home")
 }
+
 
 // Não entendi nada mas funcionou para validar a URL
 function validURL(str) {
@@ -263,4 +288,12 @@ function validURL(str) {
     '(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
     '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
   return !!pattern.test(str);
+}
+
+// Validar String no formato #xxxxxx
+function validarHexadecimal(str){
+  if(!/^#[a-fA-F0-9]{6}$/i.test(str)){
+    return false
+  }
+  return true
 }
