@@ -9,6 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/reset.css">
   <link rel="stylesheet" href="css/estilos.css">
+  <link rel="stylesheet" href="css/estilos_mobile.css">
 </head>
 <body>
     <header>
@@ -44,17 +45,14 @@
       </div>
       <div class="botao-para-prosseguir" onclick="validarDadosPg1(this)">Prosseguir para perguntas</div>
     </div>
+    
     <div class="perguntas-do-quizz esconde"></div>
+    
     <div class="niveis-do-quizz esconde"></div>
-    <div class="sucesso-do-quizz ">
+    
+    <div class="sucesso-do-quizz esconde">
       <div class="orientacoes-de-preenchimento">Seu quizz está pronto!</div>
-      <div class="conteudo-para-preencher">
-        <div class="titulo-quizz">
-          <img src="https://observatoriodocinema.uol.com.br/wp-content/uploads/2019/07/homersimpson-6807529.jpg" alt="">
-          <div class="gradiente-titulo"></div>
-          <h2>Que tipo de rosquinha você é?</h2>
-        </div>
-      </div>
+      <div class="conteudo-para-preencher" onclick="acessarQuizz(this)"></div>
       <div class="botao-para-prosseguir" onclick="acessarQuizz(this)">Acessar Quizz</div>
       <p class="voltar-para-home" onclick="voltarParaHome(this)">Voltar para home</p>
     </div>
