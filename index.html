@@ -14,10 +14,10 @@
     <header>
       BuzzQuizz
     </header>
-    <div class="tela-inicial-desktop ">
+    <div class="tela-inicial-desktop">
       <div class="criar-quizz">
         <p>Você não criou nenhum quizz ainda :( </p>
-        <button onclick="renderizarTelaCriarQuizz()">Criar Quizz</button>
+        <button onclick="renderizarTelaCriarQuizz(this)">Criar Quizz</button>
       </div>
 
       <div class="todos-os-quizzes">
@@ -58,7 +58,7 @@
 
     <!--CRIAÇÃO DE QUIZZ-->
 
-    <div class="info-basica-do-quizz">
+    <div class="info-basica-do-quizz esconde">
       <div class="orientacoes-de-preenchimento">Comece pelo começo</div>
       <div class="erro"></div>
       <div class="conteudo-para-preencher">
@@ -71,11 +71,14 @@
     </div>
     <div class="perguntas-do-quizz esconde"></div>
     <div class="niveis-do-quizz esconde"></div>
-    <div class="sucesso-do-quizz esconde">
+    <div class="sucesso-do-quizz ">
       <div class="orientacoes-de-preenchimento">Seu quizz está pronto!</div>
       <div class="conteudo-para-preencher">
-        <img src="https://d2skuhm0vrry40.cloudfront.net/2021/articles/2021-01-13-17-15/hogwarts-legacy-delayed-to-2022-1610558146521.jpg/EG11/thumbnail/750x422/format/jpg/quality/60" alt="">
-        <p>titulo</p>
+        <div class="titulo-quizz">
+          <img src="https://observatoriodocinema.uol.com.br/wp-content/uploads/2019/07/homersimpson-6807529.jpg" alt="">
+          <div class="gradiente-titulo"></div>
+          <h2>Que tipo de rosquinha você é?</h2>
+        </div>
       </div>
       <div class="botao-para-prosseguir" onclick="acessarQuizz(this)">Acessar Quizz</div>
       <p class="voltar-para-home" onclick="voltarParaHome(this)">Voltar para home</p>

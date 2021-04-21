@@ -34,6 +34,11 @@ let quizzCriado = {
 let quantidadeDePerguntas;
 let quantidadeDeNiveis;
 
+function renderizarTelaCriarQuizz(estaPagina){
+  estaPagina.parentNode.parentNode.classList.add("esconde")
+  document.querySelector(".info-basica-do-quizz").classList.remove("esconde")
+}
+
 function validarDadosPg1(estaPagina){
   const tituloQuizz = document.querySelector(".input-titulo-do-quizz").value;
   const enderecoImagem = document.querySelector(".input-endereco-da-imagem").value;
