@@ -210,7 +210,7 @@ header {
 
  .texto-resultado{
    width: 340px;
-   word-break: break-all;
+   word-break: break-word;
    font-size: 19px;
    font-weight: 700;
    line-height: 25px;
