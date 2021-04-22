@@ -31,6 +31,7 @@ header {
   width: 1051px;
   border: 1px dashed #d5d5d5;
   border-radius: 5px;
+  
 }
 
 .criar-quizz p {
@@ -55,6 +56,7 @@ header {
 .todos-os-quizzes {
   width: 1051px;
   margin: 0 auto;
+  padding-bottom: 50px ;
 }
 
 .todos-os-quizzes h1 {

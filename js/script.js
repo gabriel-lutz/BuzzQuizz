@@ -64,7 +64,7 @@ function renderizarQuestoes(){
         const repostasEmbralhadas = embaralhaRespostas(questoes, i)
         renderizarQuestao.innerHTML += `
         <div class="caixa-de-questao nao-respondida">
-          <div class="titulo-da-questao" style="background: ${questoes[i].color}">${questoes[i].title}</div>
+          <div class="titulo-da-questao" style="background: ${questoes[i].color}"><h2>${questoes[i].title}</h2></div>
           <div class="respostas">
         ${repostasEmbralhadas.join("")}
           </div>
@@ -120,12 +120,12 @@ function escolherResposta(resposta, respostaEscolhida){
 
 function scrollarParaProximaQuestao(){
     const listaDeQuestoesParaScrollar = document.querySelector(".nao-respondida")
-    listaDeQuestoesParaScrollar.scrollIntoView()
+    listaDeQuestoesParaScrollar.scrollIntoView({block: "center", behavior: "smooth"})
 }
 
 function scrollParaResultado(){
     const scrollarParaResultadp = document.querySelector(".caixa-de-resultado")
-    scrollarParaResultadp.scrollIntoView();
+    scrollarParaResultadp.scrollIntoView({block: "center", behavior: "smooth"});
 }
 
 function renderizarResultadoQuizz(){
@@ -162,7 +162,7 @@ function renderizarHome(){
     solicitarListaQuizzes()
     const selecionarHome = document.querySelector(".tela-inicial-desktop")
     selecionarHome.classList.remove("esconde")
-    selecionarHome.scrollIntoView() 
+    selecionarHome.scrollIntoView({block: "center", behavior: "smooth"}) 
     const selecionaTelaDeQuizz = document.querySelector(".tela-de-quizz")
     selecionaTelaDeQuizz.classList.add("esconde")
 }
