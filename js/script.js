@@ -8,6 +8,7 @@ let solicitaListaQuizz = axios.get("https://mock-api.bootcamp.respondeai.com.br/
 
 function renderizarQuizzes(respostaComListaDeQuizzes){
     arrayListaQuizzes = respostaComListaDeQuizzes
+    console.log(respostaComListaDeQuizzes)
    let listaQuizzes = document.querySelector(".lista-quizzes")
    listaQuizzes.innerHTML = ""
    for(let i = 0; i< respostaComListaDeQuizzes.data.length; i++){
