@@ -1,4 +1,15 @@
 
+
+
+
+
+
+
+function adicionandoIDemDataStorage(novaID){
+  arrayIDs.push(novaID)
+  window.localStorage.setItem('Quizzes do Usuário', JSON.stringify(arrayIDs));
+}
+
 function estenderPergunta(pergunta){
   if(document.querySelector(".perguntas-do-quizz .esconde")!== null){
     document.querySelector(".perguntas-do-quizz .conteudo-para-preencher .esconde").parentNode.classList.add("colapsed")
@@ -22,20 +33,8 @@ function estenderNivel(pergunta){
 }
 
 
-let quizzCriado = {
-  title:"",
-  image:"",
-  questions:[],
-  levels:[]
-}
-
-
-
-let quantidadeDePerguntas;
-let quantidadeDeNiveis;
-
 function renderizarTelaCriarQuizz(estaPagina){
-  estaPagina.parentNode.parentNode.classList.add("esconde")
+  document.querySelector(".tela-inicial-desktop").classList.add("esconde")
   document.querySelector(".info-basica-do-quizz").classList.remove("esconde")
 }
 
@@ -45,7 +44,6 @@ function validarDadosPg1(estaPagina){
   quantidadeDePerguntas = parseInt(document.querySelector(".input-quantidade-de-perguntas").value);
   quantidadeDeNiveis = parseInt(document.querySelector(".input-quantidade-de-niveis").value);
 
-  //verificando validações
   if(tituloQuizz.length>20 || tituloQuizz.length<6){
     document.querySelector(".info-basica-do-quizz .erro").innerHTML="O título precisa ter de 6 à 20 caracteres!";
     document.querySelector(".input-titulo-do-quizz").value="";
@@ -262,6 +260,8 @@ function enviarNovoQuizz(){
 }
 
 function enviado(resposta){
+  adicionandoIDemDataStorage(resposta.data.id)
+  quizzEmQuestao = resposta.data.id;
   console.log(resposta)
 }
 
@@ -269,19 +269,17 @@ function ocorreuErro(erro){
   console.log(erro)
 }
 
-//FUNCAO DE ACESSAR O QUIZZ CRIADO-------------------------------------------------------------------------
 function acessarQuizz(estaPagina){
-
+  solicitarListaQuizzes()
+  solicitarQuizzSelecionado(quizzEmQuestao)
   estaPagina.parentNode.classList.add("esconde")
-  //document.querySelector(".perguntas-do-quizz").classList.remove("esconde")
   console.log("acessar quizz")
 }
-//---------------------------------------------------------------------------------------------------------
 
 function voltarParaHome(estaPagina){
+  solicitarListaQuizzes()
   estaPagina.parentNode.classList.add("esconde")
   document.querySelector(".tela-inicial-desktop").classList.remove("esconde")
-  console.log("voltar para home")
 }
 
 function validURL(str) {
