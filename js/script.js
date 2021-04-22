@@ -2,6 +2,7 @@ let arrayListaQuizzes = []
 let acertos
 let questaoAtual
 let quizzAtual
+let quizzSelecionado = []
 
 solicitarListaQuizzes()
 
@@ -12,12 +13,11 @@ function solicitarListaQuizzes(){
 
 function renderizarQuizzes(respostaComListaDeQuizzes){
     arrayListaQuizzes = respostaComListaDeQuizzes
-    console.log(respostaComListaDeQuizzes)
    let listaQuizzes = document.querySelector(".lista-quizzes")
    listaQuizzes.innerHTML = ""
    for(let i = 0; i< respostaComListaDeQuizzes.data.length; i++){
        listaQuizzes.innerHTML +=`
-       <li class="quizz" onclick="renderizarQuizzSelecionado('${respostaComListaDeQuizzes.data[i].id}')">
+       <li class="quizz" onclick="solicitarQuizzSelecionado('${respostaComListaDeQuizzes.data[i].id}')">
             <img src="${respostaComListaDeQuizzes.data[i].image}" alt="">
             <div class="gradiente"></div>
             <h2>${respostaComListaDeQuizzes.data[i].title}</h2>
@@ -26,8 +26,14 @@ function renderizarQuizzes(respostaComListaDeQuizzes){
    }
 }
 
-function renderizarQuizzSelecionado(id){
-    quizzAtual = id-1
+function solicitarQuizzSelecionado(id){
+    const solicitacao = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/buzzquizz/quizzes/${id}`)
+    solicitacao.then(renderizarQuizzSelecionado)
+}
+
+function renderizarQuizzSelecionado(respostaComQuizz){
+    quizzSelecionado = respostaComQuizz.data
+    quizzAtual = respostaComQuizz.id
     acertos = 0
     questaoAtual = 0
     const ocultar = document.querySelector(".tela-inicial-desktop")
@@ -35,34 +41,29 @@ function renderizarQuizzSelecionado(id){
     const renderizar = document.querySelector(".tela-de-quizz")
     renderizar.classList.remove("esconde")
     renderizar.innerHTML = ""
-    for(let i = 0; i < arrayListaQuizzes.data.length; i++){
-        if(id === `${arrayListaQuizzes.data[i].id}`){
-            renderizarTituloQuizz(i)       
-            renderizarQuestoes(i) 
-        }
-    }
+    renderizarTituloQuizz()       
+    renderizarQuestoes() 
     setTimeout(scrollarParaProximaQuestao, 1000)
 }
 
-function renderizarTituloQuizz(indice){
+function renderizarTituloQuizz(){
     const renderizarTitulo = document.querySelector(".tela-de-quizz")
     renderizarTitulo.innerHTML += `
     <div class="titulo-quizz">
-        <img src="${arrayListaQuizzes.data[indice].image}" alt="">
+        <img src="${quizzSelecionado.image}" alt="">
         <div class="gradiente"></div>
-        <h2>${arrayListaQuizzes.data[indice].title}</h2>
+        <h2>${quizzSelecionado.title}</h2>
       </div>
     `
 }
 
-function renderizarQuestoes(indice){
+function renderizarQuestoes(){
     const renderizarQuestao = document.querySelector(".tela-de-quizz")
-    const questoes = arrayListaQuizzes.data[indice].questions
-    
+    const questoes = quizzSelecionado.questions
     for(let i = 0; i < questoes.length; i++){
         const repostasEmbralhadas = embaralhaRespostas(questoes, i)
         renderizarQuestao.innerHTML += `
-        <div class="caixa-de-questao">
+        <div class="caixa-de-questao nao-respondida">
           <div class="titulo-da-questao" style="background: ${questoes[i].color}">${questoes[i].title}</div>
           <div class="respostas">
         ${repostasEmbralhadas.join("")}
@@ -71,7 +72,6 @@ function renderizarQuestoes(indice){
         `
     }
 }
-
 
 function embaralhaRespostas(questoes, i){
     let respostasEmbaralhadas =[]
@@ -95,20 +95,19 @@ function embaralhaRespostas(questoes, i){
    return respostasEmbaralhadas.sort(comparador)
 }
 
-
 function escolherResposta(resposta, respostaEscolhida){
     questaoAtual ++
     if(resposta === true){
         acertos ++
     }
     let questao = respostaEscolhida.parentNode
+    questao.parentNode.classList.remove("nao-respondida")
     let todasRespostas = questao.querySelectorAll(".opcao-resposta")
     for(let i = 0; i < todasRespostas.length; i++){
         todasRespostas[i].classList.remove("ocultar-cor")
         todasRespostas[i].classList.add("nao-escolhida")
         todasRespostas[i].removeAttribute("onclick")
     }
-    
     const listaDeQuestoesParaScrollar = document.querySelectorAll(".caixa-de-questao")
     respostaEscolhida.classList.remove("nao-escolhida")
     if(questaoAtual <  listaDeQuestoesParaScrollar.length){
@@ -120,8 +119,8 @@ function escolherResposta(resposta, respostaEscolhida){
 }
 
 function scrollarParaProximaQuestao(){
-    const listaDeQuestoesParaScrollar = document.querySelectorAll(".caixa-de-questao")
-    listaDeQuestoesParaScrollar[questaoAtual].scrollIntoView()
+    const listaDeQuestoesParaScrollar = document.querySelector(".nao-respondida")
+    listaDeQuestoesParaScrollar.scrollIntoView()
 }
 
 function scrollParaResultado(){
@@ -130,8 +129,8 @@ function scrollParaResultado(){
 }
 
 function renderizarResultadoQuizz(){
-    const arrayListaNiveis = arrayListaQuizzes.data[quizzAtual].levels
-    const acertosUsuario = (acertos / arrayListaQuizzes.data[quizzAtual].questions.length) * 100
+    const arrayListaNiveis = quizzSelecionado.levels
+    const acertosUsuario = (acertos / quizzSelecionado.questions.length) * 100
     const renderizarResultado = document.querySelector(".tela-de-quizz")
     let maior = 0
     console.log(arrayListaNiveis)
@@ -140,7 +139,6 @@ function renderizarResultadoQuizz(){
                 maior = i  
         }
     }
-    console.log(maior)
     renderizarResultado.innerHTML += `
             <div class="caixa-de-resultado">
                 <div class="titulo-resultado">${acertosUsuario.toFixed(0)}% de acertos: ${arrayListaNiveis[maior].title}</div>
@@ -151,7 +149,7 @@ function renderizarResultadoQuizz(){
                 <p>${arrayListaNiveis[maior].text}</p>
                 </div>
             </div>
-                <button class="reiniciar-quizz" onclick="renderizarQuizzSelecionado('${quizzAtual + 1}')">
+                <button class="reiniciar-quizz" onclick="solicitarQuizzSelecionado('${quizzSelecionado.id}')">
                 Reiniciar Quizz
                 </button>
                 <button class="voltar-home" onclick="renderizarHome()">
@@ -161,11 +159,14 @@ function renderizarResultadoQuizz(){
 }
 
 function renderizarHome(){
+    solicitarListaQuizzes()
     const selecionarHome = document.querySelector(".tela-inicial-desktop")
     selecionarHome.classList.remove("esconde")
+    selecionarHome.scrollIntoView() 
     const selecionaTelaDeQuizz = document.querySelector(".tela-de-quizz")
     selecionaTelaDeQuizz.classList.add("esconde")
 }
+
 function comparador(){
     return Math.random() - 0.5;
 }
