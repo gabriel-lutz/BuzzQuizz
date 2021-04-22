@@ -56,8 +56,18 @@ header {
   width: 1051px;
   margin: 0 auto;
 }
+.quizzes-do-usuario {
+  width: 1051px;
+  margin: 0 auto;
+  margin-bottom: 50px;
+  margin-top: 140px;
+}
 
 .todos-os-quizzes h1 {
+  font-size: 20px;
+  font-weight: 700;
+}
+.quizzes-do-usuario h1 {
   font-size: 20px;
   font-weight: 700;
 }
@@ -442,3 +452,13 @@ header {
 .niveis-do-quizz .colapsed {
   height: 74px;
 }
+.adicionar-quizz {
+  display: flex;
+  align-items: center;
+}
+.adicionar-quizz ion-icon {
+  color: red;
+  margin-left: 20px;
+  font-size: 30px;
+}
+/* quizzes do usuario */

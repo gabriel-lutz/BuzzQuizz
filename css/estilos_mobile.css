@@ -3,6 +3,12 @@
   .info-basica-do-quizz {
     max-width: 375px;
   }
+  .adicionar-quizz {
+    justify-content: space-between;
+  }
+  .quizzes-do-usuario {
+    margin-top: 111px;
+  }
   .perguntas-do-quizz {
     max-width: 375px;
   }

@@ -1,4 +1,10 @@
 
+
+
+
+
+
+
 function adicionandoIDemDataStorage(novaID){
   arrayIDs.push(novaID)
   window.localStorage.setItem('Quizzes do Usuário', JSON.stringify(arrayIDs));
@@ -28,7 +34,7 @@ function estenderNivel(pergunta){
 
 
 function renderizarTelaCriarQuizz(estaPagina){
-  estaPagina.parentNode.parentNode.classList.add("esconde")
+  document.querySelector(".tela-inicial-desktop").classList.add("esconde")
   document.querySelector(".info-basica-do-quizz").classList.remove("esconde")
 }
 
@@ -255,6 +261,7 @@ function enviarNovoQuizz(){
 
 function enviado(resposta){
   adicionandoIDemDataStorage(resposta.data.id)
+  quizzEmQuestao = resposta.data.id;
   console.log(resposta)
 }
 
@@ -262,19 +269,17 @@ function ocorreuErro(erro){
   console.log(erro)
 }
 
-//FUNCAO DE ACESSAR O QUIZZ CRIADO-------------------------------------------------------------------------
 function acessarQuizz(estaPagina){
-
+  solicitarListaQuizzes()
+  solicitarQuizzSelecionado(quizzEmQuestao)
   estaPagina.parentNode.classList.add("esconde")
-  //document.querySelector(".perguntas-do-quizz").classList.remove("esconde")
   console.log("acessar quizz")
 }
-//---------------------------------------------------------------------------------------------------------
 
 function voltarParaHome(estaPagina){
+  solicitarListaQuizzes()
   estaPagina.parentNode.classList.add("esconde")
   document.querySelector(".tela-inicial-desktop").classList.remove("esconde")
-  console.log("voltar para home")
 }
 
 function validURL(str) {
