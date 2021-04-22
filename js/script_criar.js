@@ -34,6 +34,11 @@ let quizzCriado = {
 let quantidadeDePerguntas;
 let quantidadeDeNiveis;
 
+function renderizarTelaCriarQuizz(estaPagina){
+  estaPagina.parentNode.parentNode.classList.add("esconde")
+  document.querySelector(".info-basica-do-quizz").classList.remove("esconde")
+}
+
 function validarDadosPg1(estaPagina){
   const tituloQuizz = document.querySelector(".input-titulo-do-quizz").value;
   const enderecoImagem = document.querySelector(".input-endereco-da-imagem").value;
@@ -62,18 +67,16 @@ function validarDadosPg1(estaPagina){
     return;
   }
 
-  //Salvando as variaveis no objeto de envio
   quizzCriado.title = tituloQuizz;
   quizzCriado.image = enderecoImagem;
 
-  //removendo e adicionando "esconde" para ir para proxima pagina
   estaPagina.parentNode.classList.add("esconde")
   document.querySelector(".perguntas-do-quizz").classList.remove("esconde")
-
-  //chamando as funcoes que criam as proximas paginas
+  
   gerarPaginaDePerguntasDoQuizz(quantidadeDePerguntas);
   gerarPaginaDeNiveisDoQuizz(quantidadeDeNiveis);
-  //gerarPaginaFinalDeCriacao(tituloQuizz,enderecoImagem);
+  gerarPaginaFinalDeCriacao(tituloQuizz,enderecoImagem);
+ 
 }
 
 function gerarPaginaDePerguntasDoQuizz(numeroDePerguntas){
@@ -99,6 +102,7 @@ function gerarPaginaDePerguntasDoQuizz(numeroDePerguntas){
   </div>`
   }
   document.querySelector(".perguntas-do-quizz").innerHTML+=`<div class="botao-para-prosseguir" onclick="validarDadosPg2(this)">Prosseguir para criar níveis</div>`
+  document.querySelector(".perguntas-do-quizz ion-icon").click()
 }
 
 function gerarPaginaDeNiveisDoQuizz(numeroDeNiveis){
@@ -116,12 +120,15 @@ function gerarPaginaDeNiveisDoQuizz(numeroDeNiveis){
   </div>`
   }
   document.querySelector(".niveis-do-quizz").innerHTML +=`<div class="botao-para-prosseguir" onclick="validarDadosPg3(this)">Finalizar quizz</div>`
+  document.querySelector(".niveis-do-quizz ion-icon").click()
 }
 
 function gerarPaginaFinalDeCriacao(titulo,imagem){
-  //FALTA FAZER
+  document.querySelector(".sucesso-do-quizz .conteudo-para-preencher").innerHTML=`
+    <img src=${imagem} alt="">
+    <div class="gradiente-titulo" onclick="acessarQuizz(this)"></div>
+    <div class="nomeDoQuiz">${titulo}</div>`
 }
-
 
 function validarDadosPg2(estaPagina){
   const arrayDeQuestoesObj = [];
@@ -253,44 +260,40 @@ function enviarNovoQuizz(){
   promisse.then(enviado)
   promisse.catch(ocorreuErro)
 }
-//ENVIADO CORRETAMENTE
+
 function enviado(resposta){
   console.log(resposta)
 }
-//OCORREU ERRO
+
 function ocorreuErro(erro){
   console.log(erro)
 }
 
-//FUNCAO DE ACESSAR O QUIZZ CRIADO
+//FUNCAO DE ACESSAR O QUIZZ CRIADO-------------------------------------------------------------------------
 function acessarQuizz(estaPagina){
 
   estaPagina.parentNode.classList.add("esconde")
   //document.querySelector(".perguntas-do-quizz").classList.remove("esconde")
   console.log("acessar quizz")
 }
+//---------------------------------------------------------------------------------------------------------
 
-//FUNCAO VOLTAR PARA HOVE
 function voltarParaHome(estaPagina){
-
   estaPagina.parentNode.classList.add("esconde")
-  //document.querySelector(".perguntas-do-quizz").classList.remove("esconde") //REMOVER ESCONDE DA HOME
+  document.querySelector(".tela-inicial-desktop").classList.remove("esconde")
   console.log("voltar para home")
 }
 
-
-// Não entendi nada mas funcionou para validar a URL
 function validURL(str) {
-  var pattern = new RegExp('^(https?:\\/\\/)?'+ // protocol
-    '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ // domain name
-    '((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
-    '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // port and path
-    '(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
-    '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
+  var pattern = new RegExp('^(https?:\\/\\/)?'+
+    '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+
+    '((\\d{1,3}\\.){3}\\d{1,3}))'+
+    '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ 
+    '(\\?[;&a-z\\d%_.~+=-]*)?'+
+    '(\\#[-a-z\\d_]*)?$','i');
   return !!pattern.test(str);
 }
 
-// Validar String no formato #xxxxxx
 function validarHexadecimal(str){
   if(!/^#[a-fA-F0-9]{6}$/i.test(str)){
     return false

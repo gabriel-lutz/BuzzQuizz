@@ -9,15 +9,16 @@
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/reset.css">
   <link rel="stylesheet" href="css/estilos.css">
+  <link rel="stylesheet" href="css/estilos_mobile.css">
 </head>
 <body>
     <header>
       BuzzQuizz
     </header>
-    <div class="tela-inicial-desktop ">
+    <div class="tela-inicial-desktop">
       <div class="criar-quizz">
         <p>Você não criou nenhum quizz ainda :( </p>
-        <button onclick="renderizarTelaCriarQuizz()">Criar Quizz</button>
+        <button onclick="renderizarTelaCriarQuizz(this)">Criar Quizz</button>
       </div>
 
       <div class="todos-os-quizzes">
@@ -33,7 +34,7 @@
 
     <!--CRIAÇÃO DE QUIZZ-->
 
-    <div class="info-basica-do-quizz">
+    <div class="info-basica-do-quizz esconde">
       <div class="orientacoes-de-preenchimento">Comece pelo começo</div>
       <div class="erro"></div>
       <div class="conteudo-para-preencher">
@@ -44,14 +45,14 @@
       </div>
       <div class="botao-para-prosseguir" onclick="validarDadosPg1(this)">Prosseguir para perguntas</div>
     </div>
+    
     <div class="perguntas-do-quizz esconde"></div>
+    
     <div class="niveis-do-quizz esconde"></div>
+    
     <div class="sucesso-do-quizz esconde">
       <div class="orientacoes-de-preenchimento">Seu quizz está pronto!</div>
-      <div class="conteudo-para-preencher">
-        <img src="https://d2skuhm0vrry40.cloudfront.net/2021/articles/2021-01-13-17-15/hogwarts-legacy-delayed-to-2022-1610558146521.jpg/EG11/thumbnail/750x422/format/jpg/quality/60" alt="">
-        <p>titulo</p>
-      </div>
+      <div class="conteudo-para-preencher" onclick="acessarQuizz(this)"></div>
       <div class="botao-para-prosseguir" onclick="acessarQuizz(this)">Acessar Quizz</div>
       <p class="voltar-para-home" onclick="voltarParaHome(this)">Voltar para home</p>
     </div>

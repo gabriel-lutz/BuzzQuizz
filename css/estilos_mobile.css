@@ -1,2 +1,18 @@
 @media (max-width: 1100px) {
+  /*CRIAÇÃO DE QUIZZ*/
+  .info-basica-do-quizz {
+    max-width: 375px;
+  }
+  .perguntas-do-quizz {
+    max-width: 375px;
+  }
+  .niveis-do-quizz {
+    max-width: 375px;
+  }
+  .sucesso-do-quizz {
+    max-width: 375px;
+  }
+  .botao-para-prosseguir {
+    width: 324px;
+  }
 }
