@@ -124,12 +124,15 @@ header {
   z-index: 3;
 }
 
+.tela-inicial-desktop {
+  width: 100%;
+}
 .tela-de-quizz {
   margin-top: 69px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-bottom:50px;
+  padding-bottom: 50px;
 }
 
 .titulo-quizz {
