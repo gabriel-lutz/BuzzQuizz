@@ -2,9 +2,13 @@ let arrayListaQuizzes = []
 let acertos
 let questaoAtual
 let quizzAtual
-let solicitaListaQuizz = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/buzzquizz/quizzes")
-    solicitaListaQuizz.then(renderizarQuizzes)
 
+solicitarListaQuizzes()
+
+function solicitarListaQuizzes(){
+    let solicitaListaQuizz = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/buzzquizz/quizzes")
+    solicitaListaQuizz.then(renderizarQuizzes)
+}
 
 function renderizarQuizzes(respostaComListaDeQuizzes){
     arrayListaQuizzes = respostaComListaDeQuizzes
