@@ -1,10 +1,4 @@
 
-
-
-
-
-
-
 function adicionandoIDemDataStorage(novaID){
   arrayIDs.push(novaID)
   window.localStorage.setItem('Quizzes do Usuário', JSON.stringify(arrayIDs));
