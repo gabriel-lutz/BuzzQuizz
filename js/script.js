@@ -208,7 +208,7 @@ function renderizarHome(){
     solicitarListaQuizzes()
     const selecionarHome = document.querySelector(".tela-inicial-desktop")
     selecionarHome.classList.remove("esconde")
-    selecionarHome.scrollIntoView({block: "center", behavior: "smooth"}) 
+    selecionarHome.scrollIntoView({block: "start", behavior: "smooth"}) 
     const selecionaTelaDeQuizz = document.querySelector(".tela-de-quizz")
     selecionaTelaDeQuizz.classList.add("esconde")
 }

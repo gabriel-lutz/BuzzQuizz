@@ -1,22 +1,24 @@
 @media (max-width: 1100px) {
   .tela-inicial-desktop {
     width: 100%;
-    padding: 0 18px;
   }
   .criar-quizz {
     width: 100%;
     margin: 107px 0;
   }
 
-  .todos-os-quizzes {
+  .quizzes-do-usuario{
     width: 100%;
+  }
+  .todos-os-quizzes {
+    width: 340px;
     display: flex;
     flex-direction: column;
     align-items: center;
     padding-bottom: 50px;
   }
   .todos-os-quizzes h1 {
-    width: 340px;
+    width: 100%;
   }
   .lista-quizzes {
     width: 100%;
@@ -37,6 +39,7 @@
   }
   .titulo-quizz h2 {
     font-size: 19px;
+    word-break: break-all;
   }
 
   .caixa-de-questao {
@@ -45,7 +48,9 @@
     margin-top: 24px;
     padding: 18px 18px;
   }
-
+  .repostas{
+    margin: 0 18px
+  }
   .opcao-resposta {
     width: 163px;
   }
@@ -57,6 +62,7 @@
   .opcao-resposta p {
     font-size: 13px;
     margin-bottom: 13px;
+    word-break: break-all;
   }
 
   .titulo-da-questao {
@@ -65,6 +71,7 @@
     padding: 0 10px;
     text-align: center;
     font-size: 19px;
+    word-break: break-all;
   }
 
   .caixa-de-resultado {
@@ -74,10 +81,18 @@
     justify-content: none;
   }
 
+  .titulo-resultado{
+    text-align: center;
+    font-size: 19px;
+  }
+
   .imagem-resultado {
     margin: 9px 0;
     width: 340px;
     height: 255px;
+  }
+  .texto-resultado{
+    font-size: 17px;
   }
 
   /*CRIAÇÃO DE QUIZZ*/

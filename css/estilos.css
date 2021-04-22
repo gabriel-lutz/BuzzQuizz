@@ -157,7 +157,7 @@ header {
 
 .caixa-de-questao {
   width: 759px;
-  height: 676px;
+  height: auto;
   margin: 42px 0 0 0;
   background: #fff;
   box-sizing: border-box;
@@ -173,6 +173,7 @@ header {
   margin-bottom: 20px;
   justify-content: center;
   align-items: center;
+  text-align: center;
   font-size: 23px;
   color: #fff;
 }
@@ -196,6 +197,7 @@ header {
   font-size: 20px;
   font-weight: 700;
   margin-bottom: 25px;
+  word-break: break-all;
 }
 
 .caixa-de-resultado {
