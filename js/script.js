@@ -18,7 +18,7 @@ let quizzCriado = {
     levels:[]
 }
 function verificarSeExisteDataStorage(){
-    if(JSON.parse(window.localStorage.getItem('Quizzes do Usuário'))===null){
+    if(JSON.parse(window.localStorage.getItem('Quizzes do Usuário'))===null||JSON.parse(window.localStorage.getItem('Quizzes do Usuário')).length===0){
       window.localStorage.setItem('Quizzes do Usuário', JSON.stringify(arrayIDs));
     }else{
       arrayIDs = JSON.parse(window.localStorage.getItem('Quizzes do Usuário'))
@@ -33,7 +33,6 @@ solicitarListaQuizzes()
 
 function solicitarListaQuizzes(){
     let solicitaListaQuizz = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/buzzquizz/quizzes")
-    console.log(solicitaListaQuizz)
     solicitaListaQuizz.then(renderizarQuizzes)
 }
 

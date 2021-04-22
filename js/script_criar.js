@@ -265,6 +265,8 @@ function ocorreuErro(erro){
 
 function acessarQuizz(estaPagina){
   solicitarListaQuizzes()
+  document.querySelector(".criar-quizz").classList.add("esconde")
+  document.querySelector(".quizzes-do-usuario").classList.remove("esconde")
   solicitarQuizzSelecionado(quizzEmQuestao)
   estaPagina.parentNode.classList.add("esconde")
   console.log("acessar quizz")
@@ -272,6 +274,8 @@ function acessarQuizz(estaPagina){
 
 function voltarParaHome(estaPagina){
   solicitarListaQuizzes()
+  document.querySelector(".criar-quizz").classList.add("esconde")
+  document.querySelector(".quizzes-do-usuario").classList.remove("esconde")
   estaPagina.parentNode.classList.add("esconde")
   document.querySelector(".tela-inicial-desktop").classList.remove("esconde")
 }
