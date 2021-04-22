@@ -1,14 +1,3 @@
-let arrayIDs = []
-
-verificarSeExisteDataStorage();
-
-function verificarSeExisteDataStorage(){
-  if(JSON.parse(window.localStorage.getItem('Quizzes do Usuário'))===null){
-    window.localStorage.setItem('Quizzes do Usuário', JSON.stringify(arrayIDs));
-  }else{
-    arrayIDs = JSON.parse(window.localStorage.getItem('Quizzes do Usuário'))
-  }
-}
 
 function adicionandoIDemDataStorage(novaID){
   arrayIDs.push(novaID)
@@ -38,18 +27,6 @@ function estenderNivel(pergunta){
 }
 
 
-let quizzCriado = {
-  title:"",
-  image:"",
-  questions:[],
-  levels:[]
-}
-
-
-
-let quantidadeDePerguntas;
-let quantidadeDeNiveis;
-
 function renderizarTelaCriarQuizz(estaPagina){
   estaPagina.parentNode.parentNode.classList.add("esconde")
   document.querySelector(".info-basica-do-quizz").classList.remove("esconde")
@@ -61,7 +38,6 @@ function validarDadosPg1(estaPagina){
   quantidadeDePerguntas = parseInt(document.querySelector(".input-quantidade-de-perguntas").value);
   quantidadeDeNiveis = parseInt(document.querySelector(".input-quantidade-de-niveis").value);
 
-  //verificando validações
   if(tituloQuizz.length>20 || tituloQuizz.length<6){
     document.querySelector(".info-basica-do-quizz .erro").innerHTML="O título precisa ter de 6 à 20 caracteres!";
     document.querySelector(".input-titulo-do-quizz").value="";

@@ -4,6 +4,26 @@ let questaoAtual
 let quizzAtual
 let quizzSelecionado = []
 
+//ADICIONEI
+let arrayIDs = [] //guarda as ids dos quizzes do usuario
+verificarSeExisteDataStorage(); //verifica se jah existe storage, se jah existe modifica a array acima com os ids
+let quantidadeDePerguntas;
+let quantidadeDeNiveis;
+let quizzCriado = {
+    title:"",
+    image:"",
+    questions:[],
+    levels:[]
+}
+function verificarSeExisteDataStorage(){
+    if(JSON.parse(window.localStorage.getItem('Quizzes do Usuário'))===null){
+      window.localStorage.setItem('Quizzes do Usuário', JSON.stringify(arrayIDs));
+    }else{
+      arrayIDs = JSON.parse(window.localStorage.getItem('Quizzes do Usuário'))
+    }
+}
+//ADICIONEI
+
 solicitarListaQuizzes()
 
 function solicitarListaQuizzes(){
