@@ -1,3 +1,19 @@
+let arrayIDs = []
+
+verificarSeExisteDataStorage();
+
+function verificarSeExisteDataStorage(){
+  if(JSON.parse(window.localStorage.getItem('Quizzes do Usuário'))===null){
+    window.localStorage.setItem('Quizzes do Usuário', JSON.stringify(arrayIDs));
+  }else{
+    arrayIDs = JSON.parse(window.localStorage.getItem('Quizzes do Usuário'))
+  }
+}
+
+function adicionandoIDemDataStorage(novaID){
+  arrayIDs.push(novaID)
+  window.localStorage.setItem('Quizzes do Usuário', JSON.stringify(arrayIDs));
+}
 
 function estenderPergunta(pergunta){
   if(document.querySelector(".perguntas-do-quizz .esconde")!== null){
@@ -262,6 +278,7 @@ function enviarNovoQuizz(){
 }
 
 function enviado(resposta){
+  adicionandoIDemDataStorage(resposta.data.id)
   console.log(resposta)
 }
 
