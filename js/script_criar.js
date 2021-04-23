@@ -70,7 +70,7 @@ function validarDadosPg1(estaPagina){
   quantidadeDePerguntas = parseInt(document.querySelector(".input-quantidade-de-perguntas").value);
   quantidadeDeNiveis = parseInt(document.querySelector(".input-quantidade-de-niveis").value);
 
-  if(tituloQuizz.length>20 || tituloQuizz.length<6){
+  if(tituloQuizz.length<20 || tituloQuizz.length>65){
     document.querySelector(".info-basica-do-quizz .erro").innerHTML="O título precisa ter de 6 à 20 caracteres!";
     document.querySelector(".input-titulo-do-quizz").value="";
     return;
