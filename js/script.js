@@ -74,8 +74,14 @@ function renderizarQuizzes(respostaComListaDeQuizzes){
     arrayListaQuizzes = respostaComListaDeQuizzes
     let listaQuizzes = document.querySelector(".todos-os-quizzes .lista-quizzes")
     listaQuizzes.innerHTML = ""
+    let imprimir=true;
     for(let i = 0; i< respostaComListaDeQuizzes.data.length; i++){
-        if(!arrayDeQuizzes.includes(respostaComListaDeQuizzes.data[i].id)){ //VERIFICAR ESSA COMPARACAO DEPOIS SE DER TEMPO
+        for(let j = 0; j< arrayDeQuizzes.length; j++){
+            if(respostaComListaDeQuizzes.data[i].id==arrayDeQuizzes[j].data.id){
+                imprimir=false;
+            }
+        }
+        if(imprimir===true){
             listaQuizzes.innerHTML +=`
                 <li class="quizz" onclick="solicitarQuizzSelecionado('${respostaComListaDeQuizzes.data[i].id}')">
                     <img src="${respostaComListaDeQuizzes.data[i].image}" alt="">
@@ -84,6 +90,7 @@ function renderizarQuizzes(respostaComListaDeQuizzes){
                 </li>
             `
         }
+        imprimir=true;
     }
     renderizarQuizzesDoUsuario(respostaComListaDeQuizzes,arrayDeQuizzes)
 }

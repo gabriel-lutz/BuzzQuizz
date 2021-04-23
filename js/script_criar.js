@@ -299,6 +299,7 @@ function enviarQuizzEditado(){
 
 function enviandoEdicao(resposta){
   arrayDeQuizzes[posicaoDoQuizzSendoEditado]=resposta;
+  quizzEmQuestao = resposta.data.id;
   window.localStorage.setItem('Quizzes do Usuário', JSON.stringify(arrayDeQuizzes));
 
 }
