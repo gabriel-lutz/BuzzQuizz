@@ -280,15 +280,15 @@ function validarDadosPg3(estaPagina){
     return
   }
   quizzCriado.levels =arrayDeNiveis;
+  estaPagina.parentNode.classList.add("esconde")
+  document.querySelector(".loading-geral").classList.remove("esconde")
+  estaEditando = false;
   if(estaEditando){
     enviarQuizzEditado();
   }else{
     enviarNovoQuizz()
   }
   estaEditando = false;
-
-  estaPagina.parentNode.classList.add("esconde")
-  document.querySelector(".sucesso-do-quizz").classList.remove("esconde")  
 }
 
 function enviarQuizzEditado(){
@@ -298,10 +298,11 @@ function enviarQuizzEditado(){
 }
 
 function enviandoEdicao(resposta){
+  document.querySelector(".loading-geral").classList.add("esconde")
+  document.querySelector(".sucesso-do-quizz").classList.remove("esconde") 
   arrayDeQuizzes[posicaoDoQuizzSendoEditado]=resposta;
   quizzEmQuestao = resposta.data.id;
   window.localStorage.setItem('Quizzes do Usuário', JSON.stringify(arrayDeQuizzes));
-
 }
 function enviarNovoQuizz(){
   const promisse = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/buzzquizz/quizzes",quizzCriado)
@@ -310,6 +311,8 @@ function enviarNovoQuizz(){
 }
 
 function enviado(resposta){
+  document.querySelector(".loading-geral").classList.add("esconde")
+  document.querySelector(".sucesso-do-quizz").classList.remove("esconde") 
   adicionandoQuizzEmDataStorage(resposta)
   quizzEmQuestao = resposta.data.id;
   console.log(resposta)
@@ -332,7 +335,6 @@ function voltarParaHome(estaPagina){
   document.querySelector(".criar-quizz").classList.add("esconde")
   document.querySelector(".quizzes-do-usuario").classList.remove("esconde")
   estaPagina.parentNode.classList.add("esconde")
-  document.querySelector(".tela-inicial-desktop").classList.remove("esconde")
 }
 
 function validURL(str) {

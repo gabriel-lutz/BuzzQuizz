@@ -37,6 +37,8 @@ function verificarSeExisteDataStorage(){
 console.log(arrayDeQuizzes)
 
 function removerQuizz(posicaoDoQuizzNoDataStorage){
+    document.querySelector(".loading-geral").classList.remove("esconde")
+    document.querySelector(".tela-inicial-desktop").classList.add("esconde")
     posicaoDoQuizzASerDeletado = posicaoDoQuizzNoDataStorage
     let deletar = axios.delete("https://mock-api.bootcamp.respondeai.com.br/api/v2/buzzquizz/quizzes/"+arrayDeQuizzes[posicaoDoQuizzNoDataStorage].data.id, {headers:{ "Secret-Key": arrayDeQuizzes[posicaoDoQuizzNoDataStorage].data.key}})
     deletar.then(deletou);
@@ -66,11 +68,15 @@ function editarQuizz(posicaoDoQuizzNoDataStorage){
 solicitarListaQuizzes()
 
 function solicitarListaQuizzes(){
+    document.querySelector(".loading-geral").classList.remove("esconde")
+    document.querySelector(".tela-inicial-desktop").classList.add("esconde")
     let solicitaListaQuizz = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/buzzquizz/quizzes")
     solicitaListaQuizz.then(renderizarQuizzes)
 }
 
 function renderizarQuizzes(respostaComListaDeQuizzes){
+    document.querySelector(".loading-geral").classList.add("esconde")
+    document.querySelector(".tela-inicial-desktop").classList.remove("esconde")
     arrayListaQuizzes = respostaComListaDeQuizzes
     let listaQuizzes = document.querySelector(".todos-os-quizzes .lista-quizzes")
     listaQuizzes.innerHTML = ""
@@ -118,8 +124,10 @@ function renderizarQuizzesDoUsuario(respostaComListaDeQuizzes,arrayDeQuizzes){
 }
 
 function solicitarQuizzSelecionado(id){
+    const ocultar = document.querySelector(".tela-inicial-desktop")
+    ocultar.classList.add("esconde")
+    document.querySelector(".loading-geral").classList.remove("esconde")
     const solicitacao = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/buzzquizz/quizzes/${id}`)
-    
     solicitacao.then(renderizarQuizzSelecionado)
 }
 
@@ -128,8 +136,7 @@ function renderizarQuizzSelecionado(respostaComQuizz){
     quizzAtual = respostaComQuizz.id
     acertos = 0
     questaoAtual = 0
-    const ocultar = document.querySelector(".tela-inicial-desktop")
-    ocultar.classList.add("esconde")
+    document.querySelector(".loading-geral").classList.add("esconde")
     const renderizar = document.querySelector(".tela-de-quizz")
     renderizar.classList.remove("esconde")
     renderizar.innerHTML = ""
@@ -252,7 +259,7 @@ function renderizarResultadoQuizz(){
 function renderizarHome(){
     solicitarListaQuizzes()
     const selecionarHome = document.querySelector(".tela-inicial-desktop")
-    selecionarHome.classList.remove("esconde")
+    
     selecionarHome.scrollIntoView({block: "start", behavior: "smooth"}) 
     const selecionaTelaDeQuizz = document.querySelector(".tela-de-quizz")
     selecionaTelaDeQuizz.classList.add("esconde")
