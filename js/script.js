@@ -4,10 +4,13 @@ let questaoAtual
 let quizzAtual
 let quizzSelecionado = []
 let teste;
+let posicaoDoQuizzASerDeletado;
+let estaEditando = false;
+let posicaoDoQuizzSendoEditado;
 
 //ADICIONEI
-let arrayIDs = [] //guarda as ids dos quizzes do usuario
-verificarSeExisteDataStorage(); //verifica se jah existe storage, se jah existe modifica a array acima com os ids
+let arrayDeQuizzes = []
+verificarSeExisteDataStorage();
 let quantidadeDePerguntas;
 let quizzEmQuestao;
 let quantidadeDeNiveis;
@@ -17,17 +20,54 @@ let quizzCriado = {
     questions:[],
     levels:[]
 }
+
+
 function verificarSeExisteDataStorage(){
     if(JSON.parse(window.localStorage.getItem('Quizzes do Usuário'))===null||JSON.parse(window.localStorage.getItem('Quizzes do Usuário')).length===0){
-      window.localStorage.setItem('Quizzes do Usuário', JSON.stringify(arrayIDs));
+      window.localStorage.setItem('Quizzes do Usuário', JSON.stringify(arrayDeQuizzes));
     }else{
-      arrayIDs = JSON.parse(window.localStorage.getItem('Quizzes do Usuário'))
+      arrayDeQuizzes = JSON.parse(window.localStorage.getItem('Quizzes do Usuário'))
       document.querySelector(".criar-quizz").classList.add("esconde")
       document.querySelector(".quizzes-do-usuario").classList.remove("esconde")
     }
 }
-//ADICIONEI
 
+//essa linha abaixo eh usada quando precisa limpar o storage
+//window.localStorage.setItem('Quizzes do Usuário', JSON.stringify([]))
+console.log(arrayDeQuizzes)
+
+function removerQuizz(posicaoDoQuizzNoDataStorage){
+    posicaoDoQuizzASerDeletado = posicaoDoQuizzNoDataStorage
+    let deletar = axios.delete("https://mock-api.bootcamp.respondeai.com.br/api/v2/buzzquizz/quizzes/"+arrayDeQuizzes[posicaoDoQuizzNoDataStorage].data.id, {headers:{ "Secret-Key": arrayDeQuizzes[posicaoDoQuizzNoDataStorage].data.key}})
+    console.log("apos axios")
+    console.log(arrayDeQuizzes)
+    deletar.then(deletou);
+    deletar.catch(ocorreuErro);
+}
+
+function deletou(resposta){
+    console.log("em resp")
+    console.log(arrayDeQuizzes)
+    console.log(resposta)
+    arrayDeQuizzes.splice(posicaoDoQuizzASerDeletado,1)
+    window.localStorage.setItem('Quizzes do Usuário', JSON.stringify(arrayDeQuizzes));
+    console.log("em resp")
+    console.log(arrayDeQuizzes)
+    document.querySelector(".criar-quizz").classList.remove("esconde")
+      document.querySelector(".quizzes-do-usuario").classList.add("esconde")
+    verificarSeExisteDataStorage()
+    solicitarListaQuizzes()
+}
+
+function ocorreuErro(resposta){
+    console.log(resposta)
+}
+
+function editarQuizz(posicaoDoQuizzNoDataStorage){
+    posicaoDoQuizzSendoEditado=posicaoDoQuizzNoDataStorage;
+    estaEditando = true;
+    renderizarTelaCriarQuizz()
+}
 
 solicitarListaQuizzes()
 
@@ -37,11 +77,12 @@ function solicitarListaQuizzes(){
 }
 
 function renderizarQuizzes(respostaComListaDeQuizzes){
+    console.log(respostaComListaDeQuizzes)
     arrayListaQuizzes = respostaComListaDeQuizzes
     let listaQuizzes = document.querySelector(".todos-os-quizzes .lista-quizzes")
     listaQuizzes.innerHTML = ""
     for(let i = 0; i< respostaComListaDeQuizzes.data.length; i++){
-        if(!arrayIDs.includes(respostaComListaDeQuizzes.data[i].id)){
+        if(!arrayDeQuizzes.includes(respostaComListaDeQuizzes.data[i].id)){
             listaQuizzes.innerHTML +=`
                 <li class="quizz" onclick="solicitarQuizzSelecionado('${respostaComListaDeQuizzes.data[i].id}')">
                     <img src="${respostaComListaDeQuizzes.data[i].image}" alt="">
@@ -51,22 +92,27 @@ function renderizarQuizzes(respostaComListaDeQuizzes){
             `
         }
     }
-    renderizarQuizzesDoUsuario(respostaComListaDeQuizzes,arrayIDs)
+    renderizarQuizzesDoUsuario(respostaComListaDeQuizzes,arrayDeQuizzes)
 }
 
-function renderizarQuizzesDoUsuario(respostaComListaDeQuizzes,arrayIDs){
+function renderizarQuizzesDoUsuario(respostaComListaDeQuizzes,arrayDeQuizzes){
     let listaQuizzes = document.querySelector(".quizzes-do-usuario .lista-quizzes")
     listaQuizzes.innerHTML = ""
     for(let i = 0; i< arrayListaQuizzes.data.length; i++){
-        for(let j=0;j<arrayIDs.length;j++){
-            if(arrayIDs[j]===respostaComListaDeQuizzes.data[i].id){
+        for(let j=0;j<arrayDeQuizzes.length;j++){
+            if(arrayDeQuizzes[j].data.id===respostaComListaDeQuizzes.data[i].id){
                  listaQuizzes.innerHTML +=`
-                <li class="quizz" onclick="solicitarQuizzSelecionado('${respostaComListaDeQuizzes.data[i].id}')">
+                <li class="quizz meu-quizz">
                     <img src="${respostaComListaDeQuizzes.data[i].image}" alt="">
-                    <div class="gradiente"></div>
-                    <h2>${respostaComListaDeQuizzes.data[i].title}</h2>
+                    <div class="gradiente" onclick="solicitarQuizzSelecionado('${respostaComListaDeQuizzes.data[i].id}')"></div>
+                    <h2 onclick="solicitarQuizzSelecionado('${respostaComListaDeQuizzes.data[i].id}')">${respostaComListaDeQuizzes.data[i].title}</h2>
+                    <div class="editar-remover">
+                        <ion-icon name="create-outline" onclick="editarQuizz(${j})"></ion-icon>
+                        <ion-icon name="trash-outline" onclick="removerQuizz(${j})"></ion-icon>
+                    </div>
                 </li>
                 `
+                console.log(respostaComListaDeQuizzes.data[i])
             }
         }
     }
@@ -74,6 +120,7 @@ function renderizarQuizzesDoUsuario(respostaComListaDeQuizzes,arrayIDs){
 
 function solicitarQuizzSelecionado(id){
     const solicitacao = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/buzzquizz/quizzes/${id}`)
+    
     solicitacao.then(renderizarQuizzSelecionado)
 }
 

@@ -1,7 +1,7 @@
 
-function adicionandoIDemDataStorage(novaID){
-  arrayIDs.push(novaID)
-  window.localStorage.setItem('Quizzes do Usuário', JSON.stringify(arrayIDs));
+function adicionandoQuizzEmDataStorage(novoQuizz){
+  arrayDeQuizzes.push(novoQuizz)
+  window.localStorage.setItem('Quizzes do Usuário', JSON.stringify(arrayDeQuizzes));
 }
 
 function estenderPergunta(pergunta){
@@ -27,9 +27,41 @@ function estenderNivel(pergunta){
 }
 
 
-function renderizarTelaCriarQuizz(estaPagina){
+function renderizarTelaCriarQuizz(){
   document.querySelector(".tela-inicial-desktop").classList.add("esconde")
   document.querySelector(".info-basica-do-quizz").classList.remove("esconde")
+  if(estaEditando){
+    colocarDadosPg1();
+  }
+}
+function colocarDadosPg1(){
+  document.querySelector(".input-titulo-do-quizz").value=arrayDeQuizzes[posicaoDoQuizzSendoEditado].data.title
+  document.querySelector(".input-endereco-da-imagem").value=arrayDeQuizzes[posicaoDoQuizzSendoEditado].data.image
+  document.querySelector(".input-quantidade-de-perguntas").value=arrayDeQuizzes[posicaoDoQuizzSendoEditado].data.questions.length
+  document.querySelector(".input-quantidade-de-niveis").value=arrayDeQuizzes[posicaoDoQuizzSendoEditado].data.levels.length
+}
+function colocarDadosPg2(){
+  for (let i = 0; i<quantidadeDePerguntas|| i < arrayDeQuizzes[posicaoDoQuizzSendoEditado].data.questions.length; i++) {
+    const perguntaSendoVerificada = document.querySelector(".pergunta"+(i+1));
+    perguntaSendoVerificada.querySelector(".input-pergunta").value =arrayDeQuizzes[posicaoDoQuizzSendoEditado].data.questions[i].title
+    perguntaSendoVerificada.querySelector(".cor-de-fundo").value = arrayDeQuizzes[posicaoDoQuizzSendoEditado].data.questions[i].color
+    perguntaSendoVerificada.querySelector(".resposta-correta").value = arrayDeQuizzes[posicaoDoQuizzSendoEditado].data.questions[i].answers[0].text
+    perguntaSendoVerificada.querySelector(".imagem-resposta-correta").value = arrayDeQuizzes[posicaoDoQuizzSendoEditado].data.questions[i].answers[0].image
+    for(let j=1;j<arrayDeQuizzes[posicaoDoQuizzSendoEditado].data.questions[i].answers.length;j++){
+      perguntaSendoVerificada.querySelector(".resposta-incorreta-"+(j)).value=arrayDeQuizzes[posicaoDoQuizzSendoEditado].data.questions[i].answers[j].text
+      perguntaSendoVerificada.querySelector(".imagem-incorreta-"+(j)).value=arrayDeQuizzes[posicaoDoQuizzSendoEditado].data.questions[i].answers[j].image
+    }
+  }
+}
+    
+function colocarDadosPg3(){
+  for (let i = 0; i < quantidadeDeNiveis || i<arrayDeQuizzes[posicaoDoQuizzSendoEditado].data.levels.length; i++) {
+    const nivelASerVerificado = document.querySelector(".nivel"+(i+1));
+    nivelASerVerificado.querySelector(".titulo-do-nivel").value = arrayDeQuizzes[posicaoDoQuizzSendoEditado].data.levels[i].title
+    nivelASerVerificado.querySelector(".porcentagem-do-nivel").value = arrayDeQuizzes[posicaoDoQuizzSendoEditado].data.levels[i].minValue
+    nivelASerVerificado.querySelector(".imagem-do-nivel").value = arrayDeQuizzes[posicaoDoQuizzSendoEditado].data.levels[i].image
+    nivelASerVerificado.querySelector(".descricao-do-nivel").value = arrayDeQuizzes[posicaoDoQuizzSendoEditado].data.levels[i].text
+  }
 }
 
 function validarDadosPg1(estaPagina){
@@ -65,9 +97,18 @@ function validarDadosPg1(estaPagina){
   estaPagina.parentNode.classList.add("esconde")
   document.querySelector(".perguntas-do-quizz").classList.remove("esconde")
   
+
   gerarPaginaDePerguntasDoQuizz(quantidadeDePerguntas);
   gerarPaginaDeNiveisDoQuizz(quantidadeDeNiveis);
   gerarPaginaFinalDeCriacao(tituloQuizz,enderecoImagem);
+  if(estaEditando){
+    colocarDadosPg2();
+    colocarDadosPg3();
+  }
+  document.querySelector(".input-titulo-do-quizz").value=""
+  document.querySelector(".input-endereco-da-imagem").value=""
+  document.querySelector(".input-quantidade-de-perguntas").value=""
+  document.querySelector(".input-quantidade-de-niveis").value=""
  
 }
 
@@ -240,12 +281,33 @@ function validarDadosPg3(estaPagina){
   console.log("Quizz Criado")
   console.log(quizzCriado)
 
-  enviarNovoQuizz()
+  console.log(posicaoDoQuizzSendoEditado)
+  console.log(arrayDeQuizzes)
+  if(estaEditando){
+    enviarQuizzEditado();
+  }else{
+    enviarNovoQuizz()
+  }
+  estaEditando = false;
+
   estaPagina.parentNode.classList.add("esconde")
   document.querySelector(".sucesso-do-quizz").classList.remove("esconde")  
   console.log("ir para p4")
 }
 
+function enviarQuizzEditado(){
+  console.log("Enviando quizz editado para o servidor")
+  const promisse = axios.put("https://mock-api.bootcamp.respondeai.com.br/api/v2/buzzquizz/quizzes/"+arrayDeQuizzes[posicaoDoQuizzSendoEditado].data.id,quizzCriado,{headers:{ "Secret-Key": arrayDeQuizzes[posicaoDoQuizzSendoEditado].data.key}})
+  promisse.then(enviandoEdicao)
+  promisse.catch(ocorreuErro)
+}
+
+function enviandoEdicao(resposta){
+  console.log(resposta)
+  arrayDeQuizzes[posicaoDoQuizzSendoEditado]=resposta;
+  window.localStorage.setItem('Quizzes do Usuário', JSON.stringify(arrayDeQuizzes));
+
+}
 function enviarNovoQuizz(){
   console.log("Enviando novo quizz para o servidor")
   const promisse = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/buzzquizz/quizzes",quizzCriado)
@@ -254,7 +316,7 @@ function enviarNovoQuizz(){
 }
 
 function enviado(resposta){
-  adicionandoIDemDataStorage(resposta.data.id)
+  adicionandoQuizzEmDataStorage(resposta)
   quizzEmQuestao = resposta.data.id;
   console.log(resposta)
 }
