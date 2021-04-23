@@ -39,22 +39,16 @@ console.log(arrayDeQuizzes)
 function removerQuizz(posicaoDoQuizzNoDataStorage){
     posicaoDoQuizzASerDeletado = posicaoDoQuizzNoDataStorage
     let deletar = axios.delete("https://mock-api.bootcamp.respondeai.com.br/api/v2/buzzquizz/quizzes/"+arrayDeQuizzes[posicaoDoQuizzNoDataStorage].data.id, {headers:{ "Secret-Key": arrayDeQuizzes[posicaoDoQuizzNoDataStorage].data.key}})
-    console.log("apos axios")
-    console.log(arrayDeQuizzes)
     deletar.then(deletou);
     deletar.catch(ocorreuErro);
 }
 
 function deletou(resposta){
-    console.log("em resp")
-    console.log(arrayDeQuizzes)
     console.log(resposta)
     arrayDeQuizzes.splice(posicaoDoQuizzASerDeletado,1)
     window.localStorage.setItem('Quizzes do Usuário', JSON.stringify(arrayDeQuizzes));
-    console.log("em resp")
-    console.log(arrayDeQuizzes)
     document.querySelector(".criar-quizz").classList.remove("esconde")
-      document.querySelector(".quizzes-do-usuario").classList.add("esconde")
+    document.querySelector(".quizzes-do-usuario").classList.add("esconde")
     verificarSeExisteDataStorage()
     solicitarListaQuizzes()
 }
@@ -77,7 +71,6 @@ function solicitarListaQuizzes(){
 }
 
 function renderizarQuizzes(respostaComListaDeQuizzes){
-    console.log(respostaComListaDeQuizzes)
     arrayListaQuizzes = respostaComListaDeQuizzes
     let listaQuizzes = document.querySelector(".todos-os-quizzes .lista-quizzes")
     listaQuizzes.innerHTML = ""
@@ -112,7 +105,6 @@ function renderizarQuizzesDoUsuario(respostaComListaDeQuizzes,arrayDeQuizzes){
                     </div>
                 </li>
                 `
-                console.log(respostaComListaDeQuizzes.data[i])
             }
         }
     }
@@ -226,7 +218,6 @@ function renderizarResultadoQuizz(){
     const acertosUsuario = (acertos / quizzSelecionado.questions.length) * 100
     const renderizarResultado = document.querySelector(".tela-de-quizz")
     let maior = 0
-    console.log(arrayListaNiveis)
     for(let i = 0; i < arrayListaNiveis.length; i++){
         if(acertosUsuario >= arrayListaNiveis[i].minValue && maior <= arrayListaNiveis[i].minValue){
                 maior = i  

@@ -56,12 +56,8 @@ function colocarDadosPg2(){
     
 function colocarDadosPg3(){
   for (let i = 0;i<arrayDeQuizzes[posicaoDoQuizzSendoEditado].data.levels.length; i++) {
-    console.log(arrayDeQuizzes[posicaoDoQuizzSendoEditado].data.levels.length)
-    console.log(quantidadeDeNiveis)
     const nivelASerVerificado = document.querySelector(".nivel"+(i+1));
-    console.log(nivelASerVerificado)
     nivelASerVerificado.querySelector(".titulo-do-nivel").value = arrayDeQuizzes[posicaoDoQuizzSendoEditado].data.levels[i].title
-    console.log(nivelASerVerificado.querySelector(".titulo-do-nivel").value)
     nivelASerVerificado.querySelector(".porcentagem-do-nivel").value = arrayDeQuizzes[posicaoDoQuizzSendoEditado].data.levels[i].minValue
     nivelASerVerificado.querySelector(".imagem-do-nivel").value = arrayDeQuizzes[posicaoDoQuizzSendoEditado].data.levels[i].image
     nivelASerVerificado.querySelector(".descricao-do-nivel").value = arrayDeQuizzes[posicaoDoQuizzSendoEditado].data.levels[i].text
@@ -75,7 +71,7 @@ function validarDadosPg1(estaPagina){
   quantidadeDeNiveis = parseInt(document.querySelector(".input-quantidade-de-niveis").value);
 
   if(tituloQuizz.length<20 || tituloQuizz.length>65){
-    document.querySelector(".info-basica-do-quizz .erro").innerHTML="O título precisa ter de 6 à 20 caracteres!";
+    document.querySelector(".info-basica-do-quizz .erro").innerHTML="O título precisa ter de 20 à 65 caracteres!";
     document.querySelector(".input-titulo-do-quizz").value="";
     return;
   }
@@ -230,11 +226,9 @@ function validarDadosPg2(estaPagina){
 
   estaPagina.parentNode.classList.add("esconde")
   document.querySelector(".niveis-do-quizz").classList.remove("esconde")
-  console.log("ir para ssss p3")
   if(estaEditando){
     colocarDadosPg3();
   }
-  console.log("ir para p3")
 }
 
 function validarDadosPg3(estaPagina){
@@ -286,11 +280,6 @@ function validarDadosPg3(estaPagina){
     return
   }
   quizzCriado.levels =arrayDeNiveis;
-  console.log("Quizz Criado")
-  console.log(quizzCriado)
-
-  console.log(posicaoDoQuizzSendoEditado)
-  console.log(arrayDeQuizzes)
   if(estaEditando){
     enviarQuizzEditado();
   }else{
@@ -300,24 +289,20 @@ function validarDadosPg3(estaPagina){
 
   estaPagina.parentNode.classList.add("esconde")
   document.querySelector(".sucesso-do-quizz").classList.remove("esconde")  
-  console.log("ir para p4")
 }
 
 function enviarQuizzEditado(){
-  console.log("Enviando quizz editado para o servidor")
   const promisse = axios.put("https://mock-api.bootcamp.respondeai.com.br/api/v2/buzzquizz/quizzes/"+arrayDeQuizzes[posicaoDoQuizzSendoEditado].data.id,quizzCriado,{headers:{ "Secret-Key": arrayDeQuizzes[posicaoDoQuizzSendoEditado].data.key}})
   promisse.then(enviandoEdicao)
   promisse.catch(ocorreuErro)
 }
 
 function enviandoEdicao(resposta){
-  console.log(resposta)
   arrayDeQuizzes[posicaoDoQuizzSendoEditado]=resposta;
   window.localStorage.setItem('Quizzes do Usuário', JSON.stringify(arrayDeQuizzes));
 
 }
 function enviarNovoQuizz(){
-  console.log("Enviando novo quizz para o servidor")
   const promisse = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/buzzquizz/quizzes",quizzCriado)
   promisse.then(enviado)
   promisse.catch(ocorreuErro)
@@ -339,7 +324,6 @@ function acessarQuizz(estaPagina){
   document.querySelector(".quizzes-do-usuario").classList.remove("esconde")
   solicitarQuizzSelecionado(quizzEmQuestao)
   estaPagina.parentNode.classList.add("esconde")
-  console.log("acessar quizz")
 }
 
 function voltarParaHome(estaPagina){

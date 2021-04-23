@@ -17,7 +17,7 @@ header {
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 10;
+  z-index: 1000;
 }
 /*Pagina Inicial Quizz*/
 .criar-quizz {
@@ -471,6 +471,12 @@ header {
 .erro {
   color: red;
   margin-bottom: 5px;
+}
+.erro-teste {
+  color: red;
+}
+.erro-teste p {
+  margin-bottom: 10px;
 }
 
 /* Fim das paginas de Criação de quizz */
