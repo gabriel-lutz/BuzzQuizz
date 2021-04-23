@@ -309,6 +309,10 @@ header {
   outline: none;
 }
 
+.titulo{
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.57), rgba(0, 0, 0, 0.57))
+}
+
 /* Início das paginas de Criação de quizz */
 /* Primeira Página */
 .info-basica-do-quizz {

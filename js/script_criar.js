@@ -221,7 +221,6 @@ function validarDadosPg2(estaPagina){
     arrayDeQuestoesObj.push({title: textoPergunta,color: corDeFundoPergunta, answers: arrayRespostasObj})
   }
   quizzCriado.questions = arrayDeQuestoesObj
-  console.log(quizzCriado)
 
 
   estaPagina.parentNode.classList.add("esconde")
@@ -282,7 +281,6 @@ function validarDadosPg3(estaPagina){
   quizzCriado.levels =arrayDeNiveis;
   estaPagina.parentNode.classList.add("esconde")
   document.querySelector(".loading-geral").classList.remove("esconde")
-  estaEditando = false;
   if(estaEditando){
     enviarQuizzEditado();
   }else{
@@ -315,11 +313,10 @@ function enviado(resposta){
   document.querySelector(".sucesso-do-quizz").classList.remove("esconde") 
   adicionandoQuizzEmDataStorage(resposta)
   quizzEmQuestao = resposta.data.id;
-  console.log(resposta)
 }
 
 function ocorreuErro(erro){
-  console.log(erro)
+  alert('Ocorreu um erro ao enviar o seu Quizz. Tente novamente.')
 }
 
 function acessarQuizz(estaPagina){

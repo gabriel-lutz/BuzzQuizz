@@ -21,10 +21,10 @@ let quizzCriado = {
     levels:[]
 }
 
-
 function verificarSeExisteDataStorage(){
     if(JSON.parse(window.localStorage.getItem('Quizzes do Usuário'))===null||JSON.parse(window.localStorage.getItem('Quizzes do Usuário')).length===0){
       window.localStorage.setItem('Quizzes do Usuário', JSON.stringify(arrayDeQuizzes));
+      
     }else{
       arrayDeQuizzes = JSON.parse(window.localStorage.getItem('Quizzes do Usuário'))
       document.querySelector(".criar-quizz").classList.add("esconde")
@@ -34,7 +34,7 @@ function verificarSeExisteDataStorage(){
 
 //essa linha abaixo eh usada quando precisa limpar o storage
 //window.localStorage.setItem('Quizzes do Usuário', JSON.stringify([]))
-console.log(arrayDeQuizzes)
+
 
 function removerQuizz(posicaoDoQuizzNoDataStorage){
     document.querySelector(".loading-geral").classList.remove("esconde")
@@ -46,7 +46,6 @@ function removerQuizz(posicaoDoQuizzNoDataStorage){
 }
 
 function deletou(resposta){
-    console.log(resposta)
     arrayDeQuizzes.splice(posicaoDoQuizzASerDeletado,1)
     window.localStorage.setItem('Quizzes do Usuário', JSON.stringify(arrayDeQuizzes));
     document.querySelector(".criar-quizz").classList.remove("esconde")
@@ -56,7 +55,7 @@ function deletou(resposta){
 }
 
 function ocorreuErro(resposta){
-    console.log(resposta)
+    alert('Houve um problema ao deletar o seu Quizz. Tente novamente.')
 }
 
 function editarQuizz(posicaoDoQuizzNoDataStorage){
@@ -150,7 +149,7 @@ function renderizarTituloQuizz(){
     renderizarTitulo.innerHTML += `
     <div class="titulo-quizz">
         <img src="${quizzSelecionado.image}" alt="">
-        <div class="gradiente"></div>
+        <div class="gradiente titulo"></div>
         <h2>${quizzSelecionado.title}</h2>
       </div>
     `
