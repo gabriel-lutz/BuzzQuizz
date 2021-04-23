@@ -10,6 +10,7 @@ let posicaoDoQuizzSendoEditado;
 
 //ADICIONEI
 let arrayDeQuizzes = []
+let arrayIdDeQuizzesCriados = []
 verificarSeExisteDataStorage();
 let quantidadeDePerguntas;
 let quizzEmQuestao;
@@ -22,14 +23,21 @@ let quizzCriado = {
 }
 
 
+
+
+
 function verificarSeExisteDataStorage(){
     if(JSON.parse(window.localStorage.getItem('Quizzes do Usuário'))===null||JSON.parse(window.localStorage.getItem('Quizzes do Usuário')).length===0){
       window.localStorage.setItem('Quizzes do Usuário', JSON.stringify(arrayDeQuizzes));
+      
     }else{
       arrayDeQuizzes = JSON.parse(window.localStorage.getItem('Quizzes do Usuário'))
       document.querySelector(".criar-quizz").classList.add("esconde")
       document.querySelector(".quizzes-do-usuario").classList.remove("esconde")
     }
+    for(let i = 0; i < arrayDeQuizzes.length; i++){
+        arrayIdDeQuizzesCriados.push(arrayDeQuizzes[i].data.id)
+      }
 }
 
 //essa linha abaixo eh usada quando precisa limpar o storage
@@ -75,7 +83,7 @@ function renderizarQuizzes(respostaComListaDeQuizzes){
     let listaQuizzes = document.querySelector(".todos-os-quizzes .lista-quizzes")
     listaQuizzes.innerHTML = ""
     for(let i = 0; i< respostaComListaDeQuizzes.data.length; i++){
-        if(!arrayDeQuizzes.includes(respostaComListaDeQuizzes.data[i].id)){ //VERIFICAR ESSA COMPARACAO DEPOIS SE DER TEMPO
+        if(!arrayIdDeQuizzesCriados.includes(respostaComListaDeQuizzes.data[i].id)){ //VERIFICAR ESSA COMPARACAO DEPOIS SE DER TEMPO
             listaQuizzes.innerHTML +=`
                 <li class="quizz" onclick="solicitarQuizzSelecionado('${respostaComListaDeQuizzes.data[i].id}')">
                     <img src="${respostaComListaDeQuizzes.data[i].image}" alt="">

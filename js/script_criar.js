@@ -286,7 +286,6 @@ function validarDadosPg3(estaPagina){
     enviarNovoQuizz()
   }
   estaEditando = false;
-
   estaPagina.parentNode.classList.add("esconde")
   document.querySelector(".sucesso-do-quizz").classList.remove("esconde")  
 }
