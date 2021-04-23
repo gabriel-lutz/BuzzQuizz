@@ -41,7 +41,7 @@ function colocarDadosPg1(){
   document.querySelector(".input-quantidade-de-niveis").value=arrayDeQuizzes[posicaoDoQuizzSendoEditado].data.levels.length
 }
 function colocarDadosPg2(){
-  for (let i = 0; i<quantidadeDePerguntas|| i < arrayDeQuizzes[posicaoDoQuizzSendoEditado].data.questions.length; i++) {
+  for (let i = 0;i < arrayDeQuizzes[posicaoDoQuizzSendoEditado].data.questions.length; i++) {
     const perguntaSendoVerificada = document.querySelector(".pergunta"+(i+1));
     perguntaSendoVerificada.querySelector(".input-pergunta").value =arrayDeQuizzes[posicaoDoQuizzSendoEditado].data.questions[i].title
     perguntaSendoVerificada.querySelector(".cor-de-fundo").value = arrayDeQuizzes[posicaoDoQuizzSendoEditado].data.questions[i].color
@@ -55,9 +55,13 @@ function colocarDadosPg2(){
 }
     
 function colocarDadosPg3(){
-  for (let i = 0; i < quantidadeDeNiveis || i<arrayDeQuizzes[posicaoDoQuizzSendoEditado].data.levels.length; i++) {
+  for (let i = 0;i<arrayDeQuizzes[posicaoDoQuizzSendoEditado].data.levels.length; i++) {
+    console.log(arrayDeQuizzes[posicaoDoQuizzSendoEditado].data.levels.length)
+    console.log(quantidadeDeNiveis)
     const nivelASerVerificado = document.querySelector(".nivel"+(i+1));
+    console.log(nivelASerVerificado)
     nivelASerVerificado.querySelector(".titulo-do-nivel").value = arrayDeQuizzes[posicaoDoQuizzSendoEditado].data.levels[i].title
+    console.log(nivelASerVerificado.querySelector(".titulo-do-nivel").value)
     nivelASerVerificado.querySelector(".porcentagem-do-nivel").value = arrayDeQuizzes[posicaoDoQuizzSendoEditado].data.levels[i].minValue
     nivelASerVerificado.querySelector(".imagem-do-nivel").value = arrayDeQuizzes[posicaoDoQuizzSendoEditado].data.levels[i].image
     nivelASerVerificado.querySelector(".descricao-do-nivel").value = arrayDeQuizzes[posicaoDoQuizzSendoEditado].data.levels[i].text
@@ -101,10 +105,7 @@ function validarDadosPg1(estaPagina){
   gerarPaginaDePerguntasDoQuizz(quantidadeDePerguntas);
   gerarPaginaDeNiveisDoQuizz(quantidadeDeNiveis);
   gerarPaginaFinalDeCriacao(tituloQuizz,enderecoImagem);
-  if(estaEditando){
-    colocarDadosPg2();
-    colocarDadosPg3();
-  }
+
   document.querySelector(".input-titulo-do-quizz").value=""
   document.querySelector(".input-endereco-da-imagem").value=""
   document.querySelector(".input-quantidade-de-perguntas").value=""
@@ -136,6 +137,9 @@ function gerarPaginaDePerguntasDoQuizz(numeroDePerguntas){
   }
   document.querySelector(".perguntas-do-quizz").innerHTML+=`<div class="botao-para-prosseguir" onclick="validarDadosPg2(this)">Prosseguir para criar níveis</div>`
   document.querySelector(".perguntas-do-quizz ion-icon").click()
+  if(estaEditando){
+    colocarDadosPg2();
+  }
 }
 
 function gerarPaginaDeNiveisDoQuizz(numeroDeNiveis){
@@ -226,6 +230,10 @@ function validarDadosPg2(estaPagina){
 
   estaPagina.parentNode.classList.add("esconde")
   document.querySelector(".niveis-do-quizz").classList.remove("esconde")
+  console.log("ir para ssss p3")
+  if(estaEditando){
+    colocarDadosPg3();
+  }
   console.log("ir para p3")
 }
 

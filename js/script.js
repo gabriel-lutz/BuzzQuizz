@@ -82,7 +82,7 @@ function renderizarQuizzes(respostaComListaDeQuizzes){
     let listaQuizzes = document.querySelector(".todos-os-quizzes .lista-quizzes")
     listaQuizzes.innerHTML = ""
     for(let i = 0; i< respostaComListaDeQuizzes.data.length; i++){
-        if(!arrayDeQuizzes.includes(respostaComListaDeQuizzes.data[i].id)){
+        if(!arrayDeQuizzes.includes(respostaComListaDeQuizzes.data[i].id)){ //VERIFICAR ESSA COMPARACAO DEPOIS SE DER TEMPO
             listaQuizzes.innerHTML +=`
                 <li class="quizz" onclick="solicitarQuizzSelecionado('${respostaComListaDeQuizzes.data[i].id}')">
                     <img src="${respostaComListaDeQuizzes.data[i].image}" alt="">
