@@ -10,7 +10,6 @@ let posicaoDoQuizzSendoEditado;
 
 //ADICIONEI
 let arrayDeQuizzes = []
-let arrayIdDeQuizzesCriados = []
 verificarSeExisteDataStorage();
 let quantidadeDePerguntas;
 let quizzEmQuestao;
@@ -22,10 +21,6 @@ let quizzCriado = {
     levels:[]
 }
 
-
-
-
-
 function verificarSeExisteDataStorage(){
     if(JSON.parse(window.localStorage.getItem('Quizzes do Usuário'))===null||JSON.parse(window.localStorage.getItem('Quizzes do Usuário')).length===0){
       window.localStorage.setItem('Quizzes do Usuário', JSON.stringify(arrayDeQuizzes));
@@ -35,14 +30,11 @@ function verificarSeExisteDataStorage(){
       document.querySelector(".criar-quizz").classList.add("esconde")
       document.querySelector(".quizzes-do-usuario").classList.remove("esconde")
     }
-    for(let i = 0; i < arrayDeQuizzes.length; i++){
-        arrayIdDeQuizzesCriados.push(arrayDeQuizzes[i].data.id)
-      }
 }
 
 //essa linha abaixo eh usada quando precisa limpar o storage
 //window.localStorage.setItem('Quizzes do Usuário', JSON.stringify([]))
-console.log(arrayDeQuizzes)
+
 
 function removerQuizz(posicaoDoQuizzNoDataStorage){
     posicaoDoQuizzASerDeletado = posicaoDoQuizzNoDataStorage
@@ -52,7 +44,6 @@ function removerQuizz(posicaoDoQuizzNoDataStorage){
 }
 
 function deletou(resposta){
-    console.log(resposta)
     arrayDeQuizzes.splice(posicaoDoQuizzASerDeletado,1)
     window.localStorage.setItem('Quizzes do Usuário', JSON.stringify(arrayDeQuizzes));
     document.querySelector(".criar-quizz").classList.remove("esconde")
@@ -62,7 +53,7 @@ function deletou(resposta){
 }
 
 function ocorreuErro(resposta){
-    console.log(resposta)
+    alert('Houve um problema ao deletar o seu Quizz. Tente novamente.')
 }
 
 function editarQuizz(posicaoDoQuizzNoDataStorage){
@@ -82,8 +73,14 @@ function renderizarQuizzes(respostaComListaDeQuizzes){
     arrayListaQuizzes = respostaComListaDeQuizzes
     let listaQuizzes = document.querySelector(".todos-os-quizzes .lista-quizzes")
     listaQuizzes.innerHTML = ""
+    let imprimir=true;
     for(let i = 0; i< respostaComListaDeQuizzes.data.length; i++){
-        if(!arrayIdDeQuizzesCriados.includes(respostaComListaDeQuizzes.data[i].id)){ //VERIFICAR ESSA COMPARACAO DEPOIS SE DER TEMPO
+        for(let j = 0; j< arrayDeQuizzes.length; j++){
+            if(respostaComListaDeQuizzes.data[i].id==arrayDeQuizzes[j].data.id){
+                imprimir=false;
+            }
+        }
+        if(imprimir===true){
             listaQuizzes.innerHTML +=`
                 <li class="quizz" onclick="solicitarQuizzSelecionado('${respostaComListaDeQuizzes.data[i].id}')">
                     <img src="${respostaComListaDeQuizzes.data[i].image}" alt="">
@@ -92,6 +89,7 @@ function renderizarQuizzes(respostaComListaDeQuizzes){
                 </li>
             `
         }
+        imprimir=true;
     }
     renderizarQuizzesDoUsuario(respostaComListaDeQuizzes,arrayDeQuizzes)
 }
@@ -144,7 +142,7 @@ function renderizarTituloQuizz(){
     renderizarTitulo.innerHTML += `
     <div class="titulo-quizz">
         <img src="${quizzSelecionado.image}" alt="">
-        <div class="gradiente"></div>
+        <div class="gradiente titulo"></div>
         <h2>${quizzSelecionado.title}</h2>
       </div>
     `
