@@ -320,9 +320,8 @@ function ocorreuErro(erro){
 }
 
 function acessarQuizz(estaPagina){
-  solicitarListaQuizzes()
+  
   document.querySelector(".criar-quizz").classList.add("esconde")
-  document.querySelector(".quizzes-do-usuario").classList.remove("esconde")
   solicitarQuizzSelecionado(quizzEmQuestao)
   estaPagina.parentNode.classList.add("esconde")
 }
